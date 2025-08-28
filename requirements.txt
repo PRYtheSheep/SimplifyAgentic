@@ -3,3 +3,7 @@ setuptools==78.1.1
 setuptools-rust==1.11.1
 torch==2.8.0+cu129
 torchvision==0.23.0+cu129
+boto3
+strands
+tavily-python
+ddgs
