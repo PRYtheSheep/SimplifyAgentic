@@ -1,0 +1,5 @@
+openai-whisper==20250625
+setuptools==78.1.1
+setuptools-rust==1.11.1
+torch==2.8.0+cu129
+torchvision==0.23.0+cu129
