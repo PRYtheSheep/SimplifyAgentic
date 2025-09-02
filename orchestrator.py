@@ -13,7 +13,8 @@ import cv2
 import numpy as np
 import asyncio
 from text_analyser import TextAnalyzer
-# import whisper
+import whisper
+import torch
 
 from globals import *
 
