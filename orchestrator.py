@@ -15,6 +15,8 @@ import asyncio
 import whisper
 import torch
 
+from Text_agent import analyse_text
+
 from globals import *
 
 # Torch and cuda avalibility
@@ -513,7 +515,9 @@ class MediaAnalysisOrchestrator:
 
     async def analyze_text(self, text_content: str) -> Dict[str, Any]:
         """Placeholder for text analysis"""
+        
         logger.info(f"Text analysis requested for: {text_content[:100]}...")
+        verified_evidence = analyse_text(text_content)
         return {
             "fake_score": 65,
             "confidence": 80,
