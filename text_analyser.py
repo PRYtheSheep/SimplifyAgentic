@@ -3,9 +3,9 @@ import json
 import asyncio
 import logging
 from typing import Dict, Any, List, Tuple
-import aiohttp
 from datetime import datetime
 import os
+from dotenv import load_dotenv
 
 from globals import *
 logger = logging.getLogger(__name__)
@@ -16,11 +16,10 @@ class TextAnalyzer:
     using Amazon Bedrock LLM with web verification capabilities.
     """
     
-    def __init__(self, bedrock_client, model_id: str = DEFAULT_MODEL):
+    def __init__(self, bedrock_client, model_id):
         self.bedrock_client = bedrock_client
         self.model_id = model_id
 
-        # Define the tool specification for structured output
         self.tool_config = {
             "tools": [
                 {
@@ -152,6 +151,7 @@ class TextAnalyzer:
         """
         try:
             # Perform web verification for factual claims
+            # Get back Travlie JSON file
             web_verification_results = await self._verify_via_web(text_content)
             
             # Prepare analysis query for Bedrock with tool enforcement
@@ -199,29 +199,25 @@ class TextAnalyzer:
     
     async def _call_bedrock_with_tool(self, query: str) -> Dict[str, Any]:
         """Call Bedrock LLM with tool enforcement for structured JSON output"""
-        try:
-            messages = [{"role": "user", "content": [{"text": query}]}]
-            
-            converse_api_params = {
-                "modelId": self.model_id,
-                "system": [{"text": self.system_prompt}],
-                "messages": messages,
-                "inferenceConfig": {
-                    "temperature": 0.1,
-                    "maxTokens": 2000
-                },
-                "toolConfig": self.tool_config,
-            }
-            
-            response = self.bedrock_client.converse(**converse_api_params)
-            
-            # Parse the tool response for structured data
-            return self._parse_tool_response(response)
-            
-        except Exception as e:
-            logger.error(f"Bedrock analysis with tool failed: {e}")
-            # Even if tool fails, we have a structured fallback
-            return self._get_structured_fallback_response(str(e))
+        messages = [{"role": "user", "content": [{"text": query}]}]
+        
+        converse_api_params = {
+            "modelId": self.model_id,
+            "system": [{"text": self.system_prompt}],
+            "messages": messages,
+            "inferenceConfig": {
+                "temperature": 0.1,
+                "maxTokens": 2000
+            },
+            "toolConfig": self.tool_config,
+        }
+        
+        response = self.bedrock_client.converse(**converse_api_params)
+        
+        # Parse the tool response for structured data
+        print(f'\n\n\nResponse by LLM:\n{response}\n\n\n\n')
+        return self._parse_tool_response(response)
+
     
     def _parse_tool_response(self, response: Dict) -> Dict[str, Any]:
         """Parse tool response to extract structured analysis results"""
@@ -264,6 +260,7 @@ class TextAnalyzer:
         # Simulate web verification for demo purposes
         # In production, integrate with actual APIs
         
+        #Return JSON format of Travelie
         return {
             "verification_method": "simulated_web_search",
             "checked_claims": ["Simulated fact-checking for demonstration"],
@@ -302,3 +299,93 @@ class TextAnalyzer:
         analysis_result["context_provided"] = bool(context)
         
         return analysis_result
+
+if __name__ == "__main__":
+    # Configure logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    logger = logging.getLogger(__name__)
+    
+    # Fake news example for testing
+    fake_news_text = """
+    BREAKING: Scientists at Harvard University have discovered that drinking 5 cups of coffee daily 
+    can reverse aging and extend human lifespan by 25 years. The groundbreaking study, published 
+    in the New England Journal of Medicine, reveals that coffee contains a previously unknown 
+    compound called "caffeinol" that repairs DNA damage. President Biden has already announced 
+    a national coffee initiative, and Starbucks shares have surged by 300% in pre-market trading. 
+    Doctors worldwide are calling this the most significant medical breakthrough since penicillin.
+    """
+
+    async def main():
+        logger.info("=== STARTING TEXT ANALYZER TEST ===")
+        logger.info(f"Testing with text length: {len(fake_news_text)} characters")
+
+        load_dotenv()
+
+        # AWS Configuration
+        session = boto3.Session()
+        region = os.getenv("REGION", DEFAULT_REGION)
+        model_id = os.getenv("MODEL_ID", DEFAULT_MODEL)
+
+        print(f'Using modelId: {model_id}')
+        print(f'Using region: {region}')
+        
+        try:
+            # Initialize AWS Bedrock client
+            logger.info("Initializing Bedrock client...")
+            bedrock_client = boto3.client(
+                service_name='bedrock-runtime',
+                region_name=region,
+                aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+                aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+            )
+            
+            # Create TextAnalyzer instance
+            logger.info("Creating TextAnalyzer instance...")
+            analyzer = TextAnalyzer(bedrock_client, model_id)
+            
+            # Test main analysis (only calling existing function)
+            logger.info("Calling analyze_text function...")
+            start_time = datetime.now()
+            
+            result = await analyzer.analyze_text(fake_news_text)
+            
+            end_time = datetime.now()
+            duration = (end_time - start_time).total_seconds()
+            logger.info(f"Analysis completed in {duration:.2f} seconds")
+            
+            # Log results
+            logger.info("=== ANALYSIS RESULTS ===")
+            logger.info(f"Status: {result.get('status', 'unknown')}")
+            logger.info(f"AI Score: {result.get('ai_score', 'N/A')}/100")
+            logger.info(f"Fake Score: {result.get('fake_score', 'N/A')}/100")
+            logger.info(f"Confidence: {result.get('confidence', 'N/A')}/100")
+            
+            if 'ai_evidence' in result:
+                logger.info("AI Evidence:")
+                for evidence in result['ai_evidence']:
+                    logger.info(f"  - {evidence}")
+            
+            if 'fake_evidence' in result:
+                logger.info("Fake Evidence:")
+                for evidence in result['fake_evidence']:
+                    logger.info(f"  - {evidence}")
+            
+            if 'overall_assessment' in result:
+                logger.info(f"Overall: {result['overall_assessment']}")
+            
+            # Save full results to file
+            with open('analysis_results.json', 'w') as f:
+                json.dump(result, f, indent=2)
+            logger.info("Full results saved to analysis_results.json")
+            
+            logger.info("=== TEST COMPLETED ===")
+            
+        except Exception as e:
+            logger.error(f"TEST FAILED: {e}")
+            logger.error("Traceback:", exc_info=True)
+    
+    # Run the test
+    asyncio.run(main())

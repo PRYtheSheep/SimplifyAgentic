@@ -1,0 +1,34 @@
+{
+  "ai_score": 30,
+  "fake_score": 95,
+  "confidence": 90,
+  "ai_evidence": [
+    "The text uses clear and coherent language",
+    "Sentence structure varies and doesn't follow repetitive patterns",
+    "Content includes specific details that would require knowledge (e.g., 'New England Journal of Medicine', 'caffeinol')",
+    "The writing style mimics a news article format, which is not typically AI-generated"
+  ],
+  "fake_evidence": [
+    "Extraordinary claim of reversing aging and extending lifespan by 25 years",
+    "Unrealistic stock market reaction (300% surge for Starbucks)",
+    "Implausible immediate reaction from the President and doctors worldwide",
+    "No credible scientific studies support such dramatic effects from coffee consumption",
+    "The compound 'caffeinol' is not a known scientific term"
+  ],
+  "overall_assessment": "The analyzed text appears to be a human-written piece of misinformation or satire rather than an AI-generated content. While the writing style is coherent and mimics a news article format, the claims made are highly implausible and not supported by scientific evidence. The text likely aims to create sensationalism or could be a form of satire targeting health fads and stock market reactions.",
+  "web_verification_summary": "The provided web verification context is simulated and does not offer real fact-checking results. In a real-world scenario, fact-checking would likely reveal that the claims in this text are false and not supported by credible scientific sources.",
+  "motive_analysis": "The writer's motive appears to be either creating viral misinformation for attention or engagement, or crafting a piece of satire to comment on sensationalist health claims and their effects on the stock market. The inclusion of specific details like the journal name and the made-up compound 'caffeinol' suggests an attempt to lend false credibility to the claims. The exaggerated reactions from the President and the stock market further point to either satirical intent or an attempt to create a sense of urgency and importance around the false information.",
+  "web_verification": {
+    "verification_method": "simulated_web_search",
+    "checked_claims": [
+      "Simulated fact-checking for demonstration"
+    ],
+    "findings": "This is a simulation - real implementation would use web APIs",
+    "sources_checked": 3,
+    "status": "simulated",
+    "note": "Real implementation would use: Google Fact Check, Bing News, custom databases"
+  },
+  "analysis_timestamp": "2025-09-02T17:09:55.892045",
+  "text_length": 593,
+  "status": "analysis_complete"
+}
