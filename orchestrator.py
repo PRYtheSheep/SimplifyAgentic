@@ -12,6 +12,7 @@ import ffmpeg
 import cv2
 import numpy as np
 import asyncio
+import whisper
 
 from globals import *
 
@@ -78,7 +79,7 @@ class MediaAnalysisOrchestrator:
                 {
                     "toolSpec": {
                         "name": "analyze_audio",
-                        "description": "Analyze audio file for AI-generated or fake characteristics",
+                        "description": "Transcribe audio file to text",
                         "inputSchema": {
                             "json": {
                                 "type": "object",
@@ -487,12 +488,11 @@ class MediaAnalysisOrchestrator:
 
     # Placeholder implementations for analysis tools
     async def analyze_audio(self, audio_path: str) -> Dict[str, Any]:
-        """Placeholder for audio analysis"""
         logger.info(f"Audio analysis requested for: {audio_path}")
+        model = whisper.load_model("medium")
+        result = model.transcribe(audio_path)
         return {
-            "fake_score": 35,
-            "confidence": 75,
-            "findings": ["Synthetic voice patterns detected", "Background noise appears artificial"],
+            "transcript": result["text"],
             "status": "analysis_complete"
         }
 
@@ -524,11 +524,11 @@ async def example_usage():
     """Example of how to use the orchestrator"""
     try:
         # # Analyze a video file using Bedrock orchestration
-        # result = await orchestrator.analyze_media(
-        #     media_path=EXAMPLE_VIDEO_PATH,
-        #     media_type="video"
-        # )
-        # print("Analysis result:", json.dumps(result, indent=2))
+        result = await orchestrator.analyze_media(
+            media_path=EXAMPLE_VIDEO_PATH,
+            media_type="video"
+        )
+        print("Analysis result:", json.dumps(result, indent=2))
         
         # Extract audio and frames to preset paths
         audio_path, frame_paths = await orchestrator.extract_audio_and_frames(
