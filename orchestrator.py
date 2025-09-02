@@ -12,8 +12,14 @@ import ffmpeg
 import cv2
 import numpy as np
 import asyncio
+import whisper
+import torch
 
 from globals import *
+
+# Torch and cuda avalibility
+print(torch.__version__)
+print(torch.version.cuda)
 
 # Load environment variables
 load_dotenv()
@@ -78,7 +84,7 @@ class MediaAnalysisOrchestrator:
                 {
                     "toolSpec": {
                         "name": "analyze_audio",
-                        "description": "Analyze audio file for AI-generated or fake characteristics",
+                        "description": "Transcribe audio file to text",
                         "inputSchema": {
                             "json": {
                                 "type": "object",
@@ -487,12 +493,11 @@ class MediaAnalysisOrchestrator:
 
     # Placeholder implementations for analysis tools
     async def analyze_audio(self, audio_path: str) -> Dict[str, Any]:
-        """Placeholder for audio analysis"""
         logger.info(f"Audio analysis requested for: {audio_path}")
+        model = whisper.load_model("medium")
+        result = model.transcribe(audio_path)
         return {
-            "fake_score": 35,
-            "confidence": 75,
-            "findings": ["Synthetic voice patterns detected", "Background noise appears artificial"],
+            "transcript": result["text"],
             "status": "analysis_complete"
         }
 
@@ -537,6 +542,9 @@ async def example_usage():
         )
         print(f"Extracted audio: {audio_path}")
         print(f"Extracted frames: {frame_paths}")
+
+        audio_analyser_output = await orchestrator.analyze_audio(audio_path=audio_path)
+        print(audio_analyser_output["transcript"])
         
     except Exception as e:
         print(f"Error: {e}")
