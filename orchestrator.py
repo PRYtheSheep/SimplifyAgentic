@@ -13,8 +13,13 @@ import cv2
 import numpy as np
 import asyncio
 import whisper
+import torch
 
 from globals import *
+
+# Torch and cuda avalibility
+print(torch.__version__)
+print(torch.version.cuda)
 
 # Load environment variables
 load_dotenv()
@@ -524,11 +529,11 @@ async def example_usage():
     """Example of how to use the orchestrator"""
     try:
         # # Analyze a video file using Bedrock orchestration
-        result = await orchestrator.analyze_media(
-            media_path=EXAMPLE_VIDEO_PATH,
-            media_type="video"
-        )
-        print("Analysis result:", json.dumps(result, indent=2))
+        # result = await orchestrator.analyze_media(
+        #     media_path=EXAMPLE_VIDEO_PATH,
+        #     media_type="video"
+        # )
+        # print("Analysis result:", json.dumps(result, indent=2))
         
         # Extract audio and frames to preset paths
         audio_path, frame_paths = await orchestrator.extract_audio_and_frames(
@@ -537,6 +542,9 @@ async def example_usage():
         )
         print(f"Extracted audio: {audio_path}")
         print(f"Extracted frames: {frame_paths}")
+
+        audio_analyser_output = await orchestrator.analyze_audio(audio_path=audio_path)
+        print(audio_analyser_output["transcript"])
         
     except Exception as e:
         print(f"Error: {e}")
