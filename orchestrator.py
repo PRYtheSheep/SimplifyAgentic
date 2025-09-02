@@ -12,7 +12,8 @@ import ffmpeg
 import cv2
 import numpy as np
 import asyncio
-import whisper
+from text_analyser import TextAnalyzer
+# import whisper
 
 from globals import *
 
@@ -25,8 +26,8 @@ logger = logging.getLogger(__name__)
 
 # AWS Configuration
 session = boto3.Session()
-region = os.getenv("REGION", "us-east-1")
-model_id = os.getenv("MODEL_ID", "anthropic.claude-3-sonnet-20240229-v1:0")
+region = os.getenv("REGION", DEFAULT_REGION)
+model_id = os.getenv("MODEL_ID", DEFAULT_MODEL)
 
 print(f'Using modelId: {model_id}')
 print('Using region: ', region)
@@ -507,14 +508,32 @@ class MediaAnalysisOrchestrator:
         }
 
     async def analyze_text(self, text_content: str) -> Dict[str, Any]:
-        """Placeholder for text analysis"""
+        """Analyze text content for AI-generated and fake characteristics using Bedrock"""
         logger.info(f"Text analysis requested for: {text_content[:100]}...")
-        return {
-            "fake_score": 65,
-            "confidence": 80,
-            "findings": ["Sensational language detected", "Lack of specific details"],
-            "status": "analysis_complete"
-        }
+        
+        try:
+            # Initialize text analyzer
+            text_analyzer = TextAnalyzer(self.bedrock_client, self.model_id)
+            
+            # Perform comprehensive text analysis
+            analysis_result = await text_analyzer.analyze_text(text_content)
+            
+            logger.info(f"Text analysis completed: AI score={analysis_result.get('ai_score', 'N/A')}, "
+                    f"Fake score={analysis_result.get('fake_score', 'N/A')}")
+            
+            return analysis_result
+            
+        except Exception as e:
+            logger.error(f"Text analysis failed: {e}")
+            return {
+                "ai_score": 50,
+                "fake_score": 50,
+                "confidence": 0,
+                "ai_evidence": [f"Analysis error: {str(e)}"],
+                "fake_evidence": [f"Analysis error: {str(e)}"],
+                "status": "analysis_failed",
+                "error": str(e)
+            }
 
 # Initialize the orchestrator
 orchestrator = MediaAnalysisOrchestrator()
