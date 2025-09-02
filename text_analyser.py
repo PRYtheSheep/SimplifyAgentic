@@ -8,6 +8,7 @@ import os
 from dotenv import load_dotenv
 
 from globals import *
+from Text_agent import analyse_text as raw_query_web
 logger = logging.getLogger(__name__)
 
 class TextAnalyzer:
@@ -257,19 +258,33 @@ class TextAnalyzer:
         Placeholder for web verification functionality.
         This would integrate with fact-checking APIs, search engines, or databases.
         """
-        # Simulate web verification for demo purposes
-        # In production, integrate with actual APIs
+        evidence = raw_query_web(text_content)
+        formatted_evidence = []
         
-        #Return JSON format of Travelie
-        return {
-            "verification_method": "simulated_web_search",
-            "checked_claims": ["Simulated fact-checking for demonstration"],
-            "findings": "This is a simulation - real implementation would use web APIs",
-            "sources_checked": 3,
-            "status": "simulated",
-            "note": "Real implementation would use: Google Fact Check, Bing News, custom databases"
-        }
-    
+        for result in evidence:
+            claim = result["claim"]
+            
+            # Extract the most relevant evidence snippets
+            evidence_snippets = []
+            for i, (title, content, url) in enumerate(zip(result["titles"], result["contents"], result["urls"])):
+                if i < 3:  # Limit to top 3 most relevant results per claim
+                    evidence_snippets.append({
+                        "source": url,
+                        "title": title,
+                        "content_snippet": content[:200] + "..." if len(content) > 200 else content,
+                        "relevance_score": f"Result {i+1} of {len(result['titles'])}"
+                    })
+            
+            formatted_evidence.append({
+                "claim_to_verify": claim,
+                "evidence_summary": result["summary"]
+            })
+
+        with open('web_evidence.json', 'w') as f:
+            json.dump(formatted_evidence, f, indent=2)
+        
+        return formatted_evidence
+        
     async def analyze_with_motive_assessment(self, text_content: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         Enhanced analysis that includes motive assessment and context awareness

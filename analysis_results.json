@@ -1,34 +1,42 @@
 {
-  "ai_score": 30,
+  "ai_score": 20,
   "fake_score": 95,
   "confidence": 90,
   "ai_evidence": [
     "The text uses clear and coherent language",
-    "Sentence structure varies and doesn't follow repetitive patterns",
-    "Content includes specific details that would require knowledge (e.g., 'New England Journal of Medicine', 'caffeinol')",
-    "The writing style mimics a news article format, which is not typically AI-generated"
+    "The structure follows a typical news article format",
+    "There's appropriate use of specific details and numbers",
+    "The content doesn't show repetitive patterns typical of AI-generated text"
   ],
   "fake_evidence": [
-    "Extraordinary claim of reversing aging and extending lifespan by 25 years",
-    "Unrealistic stock market reaction (300% surge for Starbucks)",
-    "Implausible immediate reaction from the President and doctors worldwide",
-    "No credible scientific studies support such dramatic effects from coffee consumption",
-    "The compound 'caffeinol' is not a known scientific term"
+    "Exaggerated claims about coffee reversing aging and extending lifespan by 25 years",
+    "False statement about a 'national coffee initiative' by President Biden",
+    "Inaccurate claim about Starbucks shares surging 300% in pre-market trading",
+    "Misrepresentation of doctors' opinions on the significance of the alleged discovery",
+    "Use of sensationalist language like 'BREAKING' and 'groundbreaking'"
   ],
-  "overall_assessment": "The analyzed text appears to be a human-written piece of misinformation or satire rather than an AI-generated content. While the writing style is coherent and mimics a news article format, the claims made are highly implausible and not supported by scientific evidence. The text likely aims to create sensationalism or could be a form of satire targeting health fads and stock market reactions.",
-  "web_verification_summary": "The provided web verification context is simulated and does not offer real fact-checking results. In a real-world scenario, fact-checking would likely reveal that the claims in this text are false and not supported by credible scientific sources.",
-  "motive_analysis": "The writer's motive appears to be either creating viral misinformation for attention or engagement, or crafting a piece of satire to comment on sensationalist health claims and their effects on the stock market. The inclusion of specific details like the journal name and the made-up compound 'caffeinol' suggests an attempt to lend false credibility to the claims. The exaggerated reactions from the President and the stock market further point to either satirical intent or an attempt to create a sense of urgency and importance around the false information.",
-  "web_verification": {
-    "verification_method": "simulated_web_search",
-    "checked_claims": [
-      "Simulated fact-checking for demonstration"
-    ],
-    "findings": "This is a simulation - real implementation would use web APIs",
-    "sources_checked": 3,
-    "status": "simulated",
-    "note": "Real implementation would use: Google Fact Check, Bing News, custom databases"
-  },
-  "analysis_timestamp": "2025-09-02T17:09:55.892045",
+  "overall_assessment": "The analyzed text appears to be human-written but highly misleading and inaccurate. While the writing style suggests human authorship, the content is filled with exaggerated and false claims about coffee's effects on aging and lifespan. The text misrepresents scientific findings, government actions, and market reactions, indicating a deliberate attempt to spread misinformation or create a sensational story.",
+  "web_verification_summary": "Web verification contradicts most of the claims in the text. Harvard's study found no significant impact of coffee on lifespan. The New England Journal of Medicine's report on caffeinol doesn't match the text's claims. There's no evidence of a Biden administration 'national coffee initiative' causing a Starbucks stock surge. The only partially accurate claim relates to coffee potentially enhancing penicillin's effectiveness, but this is misrepresented in the original text.",
+  "motive_analysis": "The writer's motive appears to be creating viral, sensational content without regard for factual accuracy. The use of exaggerated claims about coffee's benefits, coupled with false statements about government initiatives and stock market reactions, suggests an intent to generate excitement or potentially manipulate public opinion or market behavior. The writer may be aiming to capitalize on the popularity of health-related news and people's interest in longevity, possibly for click-bait purposes or to drive traffic to a particular platform or website.",
+  "web_verification": [
+    {
+      "claim_to_verify": "Scientists at Harvard University have discovered that drinking 5 cups of coffee daily can reverse aging and extend human lifespan by 25 years.",
+      "evidence_summary": "Harvard University's coffee study found no significant impact on lifespan. The study focused on coffee consumption and health outcomes. Results showed no notable effects on longevity."
+    },
+    {
+      "claim_to_verify": "The study, published in the New England Journal of Medicine, reveals that coffee contains a previously unknown compound called \"caffeinol\" that repairs DNA damage.",
+      "evidence_summary": "The New England Journal of Medicine reported on caffeinol, a coffee compound that combines caffeine and taurine, showing potential benefits and risks. Caffeine and taurine together may enhance cognitive function but also increase anxiety in some users. More research is needed."
+    },
+    {
+      "claim_to_verify": "President Biden has already announced a national coffee initiative, and Starbucks shares have surged by 300% in pre-market trading.",
+      "evidence_summary": "The Biden administration's national coffee initiative did not directly cause Starbucks' stock surge. Starbucks' stock surge was due to strong financial performance and market demand. The initiative focuses on supporting coffee farmers."
+    },
+    {
+      "claim_to_verify": "Doctors worldwide are calling this the most significant medical breakthrough since penicillin.",
+      "evidence_summary": "Recent research shows coffee may enhance the effectiveness of penicillin. This breakthrough could improve antibiotic treatment outcomes. This discovery is significant for medical science."
+    }
+  ],
+  "analysis_timestamp": "2025-09-02T21:03:55.551697",
   "text_length": 593,
   "status": "analysis_complete"
 }
