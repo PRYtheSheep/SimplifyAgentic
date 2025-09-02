@@ -55,16 +55,20 @@ else:
 @tool
 def web_search(query: str, max_results: int = 3):
     """
-    Perform an internet search with the specified query
-    
+    Perform an internet search with the given query and return structured results.
+
     Args:
-        query (str): A question or search phrase to perform a search with
-        max_results (int): Number of results to return for each web search
-        
+        query (str): The question or search phrase to search for.
+        max_results (int): Maximum number of search results to retrieve.
+
     Returns:
-        summary (str): Summary of the contents of the searched URLs.
-        titles (list of str): List of titles from the search results.
-        urls (list of str): List of URLs from the search results.
+        articledict: A dictionary containing the following keys:
+            - summary (str): Brief summary generated from Tavily API's LLM
+            - domains (list[str]): List of source domains for the results.
+            - urls (list[str]): List of result URLs.
+            - titles (list[str]): Titles of the retrieved pages.
+            - contents (list[str]): Brief description of content from the pages.
+            - claim (str): Original claim associated with the search.
     """
     print("*"*20)
     print(f"query: {query}")
@@ -83,7 +87,7 @@ def web_search(query: str, max_results: int = 3):
                 time_range = "month",
                 include_domains=domains,
                 exclude_domains = ["youtube.com","instagram.com"],
-                include_answer = "advanced",
+                include_answer = "basic",
                 search_depth = "advanced"
                 # include_raw_content = True
                 # include_images = True
@@ -117,28 +121,24 @@ def web_search(query: str, max_results: int = 3):
     articledict["urls"] = urls
     articledict["titles"] = titles
     articledict["contents"] = contents
-    # print(type(response))
-    # print(len(response))
-    # print(response)
-    print(json.dumps(response, indent=2, default=str))
-    # print(summary, titles, urls)
+
+    # print(json.dumps(response, indent=2, default=str))
     print(f"search done: {datetime.now()}")
-    # domain title content [str] , [str] , [str]
+
     return articledict
 
-def analyse_text( prompt):
+def analyse_text(prompt):
 
     """
-    Extracts factual claims from evidence.
-    Generates web search queries. 
-    Calls web_search function to run queries
-    
+    Extract factual claims from the input, generate corresponding web search queries,
+    and retrieve supporting evidence using the web_search function.
+
     Args:
-        query (str): A question or search phrase to perform a search with
-        max_results (int): Number of results to return for each web search
-        
+        prompt (str): Evidence to be verified via web search
+
     Returns:
-        verified_evidence (List(dict)) : List containing a dictionary for each claim extracted
+        List[dict]: A list of dictionaries, each representing a verified claim with
+        its associated evidence.
     """
 
     SYSTEM_PROMPT1 = """
@@ -175,7 +175,9 @@ def analyse_text( prompt):
     for i in range(len(queries)):
         web_result = web_search(queries[i])
         web_result["claim"] = claims[i]
+        
         verified_evidence.append(web_result)
+    
     return verified_evidence
 
 
