@@ -179,15 +179,7 @@ def analyse_text(prompt):
         verified_evidence.append(web_result)
     
     return verified_evidence
-
-
-
-    # response = text_agent(
-    #     f"These are the claims: {str(extracted_response)}"
-    #     )
-    # print(str(response))
         
-
 if __name__ == "__main__":
 
     start_time = datetime.now()

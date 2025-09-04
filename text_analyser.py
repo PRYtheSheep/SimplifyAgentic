@@ -259,31 +259,26 @@ class TextAnalyzer:
         This would integrate with fact-checking APIs, search engines, or databases.
         """
         evidence = raw_query_web(text_content)
-        formatted_evidence = []
+        evidence_text = "WEB EVIDENCE FOR FACT-CHECKING:\n\n"
         
-        for result in evidence:
-            claim = result["claim"]
+        for i, result in enumerate(evidence):
+            evidence_text += f"CLAIM {i+1}: {result['claim']}\n"
+            evidence_text += f"SUMMARY: {result['summary']}\n"
             
-            # Extract the most relevant evidence snippets
-            evidence_snippets = []
-            for i, (title, content, url) in enumerate(zip(result["titles"], result["contents"], result["urls"])):
-                if i < 3:  # Limit to top 3 most relevant results per claim
-                    evidence_snippets.append({
-                        "source": url,
-                        "title": title,
-                        "content_snippet": content[:200] + "..." if len(content) > 200 else content,
-                        "relevance_score": f"Result {i+1} of {len(result['titles'])}"
-                    })
+            if result["contents"]:
+                evidence_text += "TOP EVIDENCE SNIPPETS:\n"
+                for j, (content, url) in enumerate(zip(result["contents"][:3], result["urls"][:3])):
+                    evidence_text += f"{j+1}. {content[:150]}... [Source: {url}]\n"
+            else:
+                evidence_text += "NO EVIDENCE FOUND\n"
             
-            formatted_evidence.append({
-                "claim_to_verify": claim,
-                "evidence_summary": result["summary"]
-            })
+            evidence_text += f"TOTAL SOURCES: {len(result['urls'])}\n"
+            evidence_text += "-" * 50 + "\n"
 
         with open('web_evidence.json', 'w') as f:
-            json.dump(formatted_evidence, f, indent=2)
+            json.dump(evidence_text, f, indent=2)
         
-        return formatted_evidence
+        return evidence_text
         
     async def analyze_with_motive_assessment(self, text_content: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
         """
