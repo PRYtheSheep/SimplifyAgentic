@@ -13,6 +13,7 @@ import cv2
 import numpy as np
 import asyncio
 from text_analyser import TextAnalyzer
+from image_metadata import get_exif_dict
 import whisper
 import torch
 
@@ -42,6 +43,55 @@ bedrock_client = boto3.client(
     region_name=region,
     aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+)
+
+class ClaudeChat:
+    def __init__(self, bedrock_client, model_id="anthropic.claude-3-haiku-20240307-v1:0", system_prompt=None):
+        self.client = bedrock_client
+        self.model_id = model_id
+        self.system_prompt = system_prompt
+        self.history = []
+
+    def ask(self, user_input, max_tokens=200, temperature=0.5):
+        # Add user input
+        self.history.append({"role": "user", "content": [{"text": user_input}]})
+
+        # Call Bedrock with system prompt + history
+        response = self.client.converse(
+            modelId=self.model_id,
+            system=[{"text": self.system_prompt}] if self.system_prompt else None,
+            messages=self.history,
+            inferenceConfig={"maxTokens": max_tokens, "temperature": temperature}
+        )
+
+        # Extract Claude’s reply
+        reply = response["output"]["message"]["content"][0]["text"]
+
+        # Save reply to history
+        self.history.append({"role": "assistant", "content": [{"text": reply}]})
+
+        return reply
+
+    def reset(self):
+        self.history = []
+
+system_prompt = """
+You are a helpful assistant that gathers context from the user regarding a post.
+
+You are to ask for the following context:
+1. Source of the post and what is it showing.
+2. Why the user thinks the post might be deceiving.
+
+Probe for further information if the context provided is insufficient.
+DO not preamble when summarising. 
+
+Ask the questions one at a time.
+Do not ask questions that are unnecessary.
+""" 
+
+chat = ClaudeChat(
+    bedrock_client,
+    system_prompt=system_prompt
 )
 
 class MediaAnalysisOrchestrator:
@@ -103,7 +153,7 @@ class MediaAnalysisOrchestrator:
                 {
                     "toolSpec": {
                         "name": "analyze_image",
-                        "description": "Analyze image file for AI-generated or fake characteristics",
+                        "description": "Analyze image file manipulation",
                         "inputSchema": {
                             "json": {
                                 "type": "object",
@@ -388,47 +438,6 @@ class MediaAnalysisOrchestrator:
         selected.sort(key=lambda x: x[0])
         
         return selected[:max_frames]
-    
-    async def analyse_media(self, media_path: str) -> Dict[str, Any]:
-        """
-        Main analysis function that uses Bedrock to coordinate media analysis
-        """
-        try:
-            if not os.path.exists(media_path):
-                raise FileNotFoundError(f"Media file not found: {media_path}")
-            
-            # Let LLM determine media type - don't hardcode it
-            query = f"""
-                Analyze this media file for authenticity: {media_path}
-                
-                Please examine the file and determine what type of media it is (video, audio, image, or text),
-                then follow the appropriate analysis workflow.
-            """
-
-            messages = [{"role": "user", "content": [{"text": query}]}]
-
-            converse_api_params = {
-                "modelId": self.model_id,
-                "system": [{"text": self.system_prompt}],
-                "messages": messages,
-                "inferenceConfig": {
-                    "temperature": 0.1,
-                    "maxTokens": 1000
-                },
-                "toolConfig": self.tools,
-            }
-
-            try:
-                response = self.bedrock_client.converse(**converse_api_params)
-                final_result = await self._execute_tools_and_continue(response, media_path)
-                return final_result
-            except ClientError as e:
-                logger.error(f"Bedrock converse call failed: {e}")
-                raise RuntimeError(f"Analysis failed: {e}")
-
-        except Exception as e:
-            logger.error(f"Error analyzing media: {e}")
-            raise
 
     def _parse_tool_response(self, response: Dict) -> Dict[str, Any]:
         """Parse tool responses from Bedrock output"""
@@ -455,19 +464,20 @@ class MediaAnalysisOrchestrator:
     async def analyze_audio(self, audio_path: str) -> Dict[str, Any]:
         logger.info(f"Audio analysis requested for: {audio_path}")
         model = whisper.load_model("medium")
-        result = model.transcribe(audio_path)
+        result = model.transcribe(audio_path, task="translate")
         return {
             "transcript": result["text"],
             "status": "analysis_complete"
         }
 
     async def analyze_image(self, image_path: str) -> Dict[str, Any]:
-        """Placeholder for image analysis"""
         logger.info(f"Image analysis requested for: {image_path}")
+        meta = get_exif_dict(image_path=image_path)
+        manipulation = False
+        if "photoshop" in meta.keys():
+            manipulation = True
         return {
-            "fake_score": 82,
-            "confidence": 88,
-            "findings": ["AI-generated artifacts detected", "Inconsistent lighting patterns"],
+            "image_maniplulated": manipulation,
             "status": "analysis_complete"
         }
 
@@ -498,6 +508,67 @@ class MediaAnalysisOrchestrator:
                 "status": "analysis_failed",
                 "error": str(e)
             }
+        
+    def analyze_media(self, media_file: str) -> dict:
+        """
+        Determines media type from file extension, then runs the appropriate workflow.
+        
+        Args:
+            media_file (str): Path or identifier of the media file
+        
+        Returns:
+            dict: Aggregated results from all analyses
+        """
+        _, ext = os.path.splitext(media_file)
+        ext = ext.lower()
+
+        results = {}
+
+        if ext in self.VIDEO_EXTS:
+            media_type = "video"
+            # Step 1: Extract audio + frames
+            audio_file, frame_files = self.extract_audio_and_frames(media_file)
+            results["audio_extracted"] = audio_file
+            results["frames_extracted"] = frame_files
+
+            # Step 2: Transcribe audio
+            text_from_audio = self.analyze_audio(audio_file)
+            results["transcribed_text"] = text_from_audio
+
+            # Step 3: Analyze text
+            text_analysis = self.analyze_text(text_from_audio)
+            results["text_analysis"] = text_analysis
+
+            # Step 4: Analyze images + metadata
+            frame_analyses = [self.analyze_image(frame) for frame in frame_files]
+            results["frame_analysis"] = frame_analyses
+
+        elif ext in self.AUDIO_EXTS:
+            media_type = "audio"
+            # Step 1: Transcribe audio
+            text_from_audio = self.analyze_audio(media_file)
+            results["transcribed_text"] = text_from_audio
+
+            # Step 2: Analyze text
+            text_analysis = self.analyze_text(text_from_audio)
+            results["text_analysis"] = text_analysis
+
+        elif ext in self.IMAGE_EXTS:
+            media_type = "image"
+            # Step 1: Analyze image + metadata
+            image_analysis = self.analyze_image(media_file)
+            results["image_analysis"] = image_analysis
+
+        else:
+            raise ValueError(f"Unsupported file extension: {ext}")
+
+        judge = JudgementBot(bedrock_client, model_id)
+        # Final: Combine all outputs for judgement
+        results["media_type"] = media_type
+        results["final_judgement"] = judge.final_assessment()
+
+        return results
+
 
     async def _execute_tools_and_continue(self, response: Dict, media_path: str) -> Dict[str, Any]:
         """Execute requested tools and continue conversation until completion"""
@@ -607,9 +678,8 @@ orchestrator = MediaAnalysisOrchestrator()
 async def example_usage():
     """Example of how to use the orchestrator"""
     try:
-        tool_use = await orchestrator.analyse_media(EXAMPLE_VIDEO_PATH)
-        logger.info(f"Output tool use: {tool_use}")
-
+        # Get claude to extract context from user by repeatedly prompting user
+        pass
         
     except Exception as e:
         print(f"Error: {e}")
