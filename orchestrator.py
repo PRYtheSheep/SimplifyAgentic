@@ -2,6 +2,7 @@ import boto3
 import json
 import os
 import tempfile
+import subprocess
 from typing import List, Tuple, Dict, Any, Optional
 from datetime import datetime
 from pathlib import Path
@@ -231,6 +232,26 @@ class MediaAnalysisOrchestrator:
 
     async def _extract_representative_frames(self, video_path: str, output_dir: Path, frames_count: int) -> List[str]:
         """Extract representative frames from video using smart sampling and color change detection"""
+
+        def _fix_video(input_path: str) -> str:
+            """Ensure the video is properly formatted for OpenCV by remuxing/re-encoding with ffmpeg"""
+            fixed_path = tempfile.mktemp(suffix=".mp4")
+
+            try:
+                # Try remuxing (fast, no re-encode)
+                subprocess.run(
+                    ["ffmpeg", "-y", "-i", input_path, "-c:v", "copy", "-an", fixed_path],
+                    check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+                )
+            except subprocess.CalledProcessError:
+                # If remux fails, fallback to re-encode
+                subprocess.run(
+                    ["ffmpeg", "-y", "-i", input_path, "-c:v", "libx264", "-preset", "fast", "-an", fixed_path],
+                    check=True
+                )
+
+            return fixed_path
+
         frame_paths = []
         
         # Apply global frame limit
@@ -238,7 +259,7 @@ class MediaAnalysisOrchestrator:
         logger.info(f"Extracting up to {frames_count} frames (global limit: {MAX_FRAMES_LIMIT})")
         
         try:
-            cap = cv2.VideoCapture(video_path)
+            cap = cv2.VideoCapture(_fix_video(video_path))
             if not cap.isOpened():
                 raise RuntimeError("Could not open video file")
             
@@ -481,7 +502,16 @@ class MediaAnalysisOrchestrator:
         else:
             raise ValueError(f"Unsupported file extension: {ext}")
 
-        judge = JudgementBot(bedrock_client, model_id)
+        region3 = os.getenv('REGION', DEFAULT_REGION)    
+        bedrock_client2 = boto3.client(
+            service_name='bedrock-runtime',
+            region_name=region3,
+            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+        )
+        model_id = os.getenv("MODEL_ID2", DEFAULT_MODEL)
+
+        judge = JudgementBot(bedrock_client2, model_id)
         # Final: Combine all outputs for judgement
 
         combined = {

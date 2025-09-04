@@ -241,8 +241,8 @@ class JudgementBot:
         }
 
         try:
-            logger.info("Sleep for 60s to prevent throttling")
-            time.sleep(60)
+            # logger.info("Sleep for 60s to prevent throttling")
+            # time.sleep(60)
             response = self.bedrock_client.converse(**converse_api_params)
             return self._extract_final_judgement(response)
             

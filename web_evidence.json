@@ -3,36 +3,84 @@
   "claims": [
     {
       "claim_number": 1,
-      "claim_text": "The Quantum AI Investment Project has launched a project that will allow everyone to receive guaranteed monthly dividends with minimal investment.",
-      "summary": "Quantum AI projects in Singapore have no guaranteed dividends. Investment in quantum AI is strategic, focusing on innovation and cybersecurity. No financial guarantees exist for these projects.",
-      "evidence_snippets": [],
-      "total_sources": 0
+      "claim_text": "The U.S. military carried out massive precision strikes on the three key nuclear facilities in the Iranian regime - Fordow, Netanj, and Esfahan.",
+      "summary": "In 2025, U.S. military conducted precision strikes on Iran's nuclear facilities at Fordo, Natanz, and Isfahan. Iran responded with missile and drone attacks on Israeli targets. The strikes significantly escalated tensions between the U.S. and Iran.",
+      "evidence_snippets": [
+        {
+          "snippet_number": 1,
+          "content": "Addressing the nation on Saturday evening, U.S. President Donald Trump said strikes on three of Iran’s nuclear sites were a “spectacular military succ...",
+          "source_url": "https://www.cnbc.com/2025/06/22/iran-says-it-reserves-all-options-after-us-strikes-on-nuclear-sites.html"
+        },
+        {
+          "snippet_number": 2,
+          "content": "Alongside nuclear facilities at Natanz and Isfahan, Fordo was the target of U.S. air strikes on Saturday. Trump described the incursion as a “spectacu...",
+          "source_url": "https://www.cnbc.com/2025/06/22/satellite-images-show-activity-at-irans-fordo-before-us-air-strikes.html"
+        },
+        {
+          "snippet_number": 3,
+          "content": "VIDEO3:3503:35\n\nWatch President Donald Trump’s address on the U.S. bombing of Iran\n\nNews Videos\n\nPresident Donald Trump on Saturday said the United St...",
+          "source_url": "https://www.cnbc.com/2025/06/21/trump-israel-iran-conflict.html"
+        }
+      ],
+      "total_sources": 3
     },
     {
       "claim_number": 2,
-      "claim_text": "The automated trading system makes only the most profitable trades, allowing investors to increase their income.",
-      "summary": "Singapore is investing in quantum AI and has launched a hybrid quantum AI hub. Quantum-enhanced AI applications are being explored. The government is supporting quantum technology growth.",
-      "evidence_snippets": [],
-      "total_sources": 0
+      "claim_text": "Iran's key nuclear enrichment facilities have been completely and totally obliterated.",
+      "summary": "U.S. strikes destroyed one of three Iranian nuclear enrichment sites, but the others were only partially damaged and may resume operations soon. The U.S. assessment found that the program was set back by months, not years. President Trump claimed the strikes obliterated Iran's nuclear program.",
+      "evidence_snippets": [
+        {
+          "snippet_number": 1,
+          "content": "WASHINGTON — One of the three nuclear enrichment sites in Iran struck by the United States last month was mostly destroyed, setting work there back si...",
+          "source_url": "https://www.cnbc.com/2025/07/17/new-us-assessment-finds-american-strikes-destroyed-only-one-of-three-iranian-nuclear-sites.html"
+        },
+        {
+          "snippet_number": 2,
+          "content": "Alongside nuclear facilities at Natanz and Isfahan, Fordo was the target of U.S. air strikes on Saturday. Trump described the incursion as a “spectacu...",
+          "source_url": "https://www.cnbc.com/2025/06/22/satellite-images-show-activity-at-irans-fordo-before-us-air-strikes.html"
+        },
+        {
+          "snippet_number": 3,
+          "content": "A preliminary U.S. intelligence assessment, however, found that America’s airstrikes on three Iranian nuclear sites did not completely destroy those f...",
+          "source_url": "https://www.cnbc.com/2025/06/25/trump-iran-intelligence-report-nato.html"
+        }
+      ],
+      "total_sources": 3
     },
     {
       "claim_number": 3,
-      "claim_text": "Earnings from $8,000 are absolutely real.",
-      "summary": "Quantum AI investment in Singapore has seen significant growth, with S$300 million committed by the government for research and talent development. OCBC Group aims to leverage quantum computing to enhance AI. The National Quantum Office and MAS support quantum and AI advancements.",
+      "claim_text": "Iran has been saying \"death to America, death to Israel\" and killing U.S. people and others around the world.",
+      "summary": "Iran has engaged in anti-American and anti-Israel rhetoric and actions, including missile strikes and drone attacks. The U.S. has not directly intervened but warned Iran against targeting U.S. interests. Israel has considered military action against Iran.",
       "evidence_snippets": [],
       "total_sources": 0
     },
     {
       "claim_number": 4,
-      "claim_text": "The company has made sure that this income is available to everyone, which is why the minimum investment amount has been reduced to $250.",
-      "summary": "A man was ordered to pay $200,000 for selling fake goods on Instagram. The investment quantum for Temasek-owned GenZero's carbon credit initiatives is undisclosed. GenZero aims to cut 7 million tonnes of carbon emissions by 2028.",
-      "evidence_snippets": [],
-      "total_sources": 0
+      "claim_text": "The U.S. military operation was a spectacular military success.",
+      "summary": "In 2025, the U.S. military launched air strikes against Iran's nuclear facilities Fordo, Natanz, and Isfahan. The operation was a direct action against Iran's nuclear program. President Trump described the strikes as a success.",
+      "evidence_snippets": [
+        {
+          "snippet_number": 1,
+          "content": "Alongside nuclear facilities at Natanz and Isfahan, Fordo was the target of U.S. air strikes on Saturday. Trump described the incursion as a “spectacu...",
+          "source_url": "https://www.cnbc.com/2025/06/22/satellite-images-show-activity-at-irans-fordo-before-us-air-strikes.html"
+        },
+        {
+          "snippet_number": 2,
+          "content": "“We have completed our very successful attack on the three Nuclear sites in Iran, including Fordow, Natanz, and Esfahan,” President Donald Trump said ...",
+          "source_url": "https://www.cnbc.com/2025/06/21/trump-israel-iran-conflict.html"
+        },
+        {
+          "snippet_number": 3,
+          "content": "On Saturday night U.S. time, U.S. B-2 Spirit stealth bombers and submarines attacked three key Iranian nuclear sites, namely, Fordo, Natanz and Isfaha...",
+          "source_url": "https://www.cnbc.com/2025/06/23/how-the-israel-iran-standoff-took-a-turn-and-whats-next-after-a-pivotal-24-hours.html"
+        }
+      ],
+      "total_sources": 3
     },
     {
       "claim_number": 5,
-      "claim_text": "All payouts are guaranteed by the person introducing the project and their reputation.",
-      "summary": "Quantum AI Investment Project does not have a personal guarantee. Investors should conduct their own due diligence. For specific details, consult official project documentation.",
+      "claim_text": "The U.S. worked as a team with Israel, and the Israeli military did a wonderful job.",
+      "summary": "U.S.-Israel cooperation against Iran includes military actions targeting Iran's nuclear facilities. This cooperation has led to heightened regional tensions. Iran has expressed willingness to resume talks but not under current conditions.",
       "evidence_snippets": [],
       "total_sources": 0
     }

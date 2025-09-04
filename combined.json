@@ -1,68 +1,104 @@
 {
-    "Transcript": " Dear Singaporeans, the day has come. I am pleased to introduce to you the Quantum AI Investment Project. Starting November 11th, 2023, we have launched a project that will allow everyone to receive guaranteed monthly dividends with minimal investment. The automated trading system makes only the most profitable trades, allowing investors to increase their income. Earnings from $8,000 are absolutely real. The company has made sure that this income is available to everyone. That is why we have reduced the minimum investment amount to $250. All payouts are guaranteed by me personally and my reputation.",
+    "Transcript": " Thank you very much. A short time ago, the U.S. military carried out massive precision strikes on the three key nuclear facilities in the Iranian regime, Fordow, Netanj, and Esfahan. Everybody heard those names for years as they built this horribly destructive enterprise. Our objective was the destruction of Iran's nuclear enrichment capacity and a stop to the nuclear threat posed by the world's number one state sponsor of terror. Tonight, I can report to the world that the strikes were a spectacular military success. Iran's key nuclear enrichment facilities have been completely and totally obliterated. Iran, the bully of the Middle East, must now make peace. If they do not, future attacks will be far greater and a lot easier. For 40 years, Iran has been saying, death to America, death to Israel. They have been killing our people, blowing off their arms, blowing off their legs with roadside bombs. That was their specialty. We lost over a thousand people, and hundreds of thousands throughout the Middle East and around the world have died as a direct result of their hate. In particular, so many were killed by their general, Qassem Soleimani. I decided a long time ago that I would not let this happen. It will not continue. I want to thank and congratulate Prime Minister Bibi Netanyahu. We worked as a team like perhaps no team has ever worked before, and we've gone a long way to erasing this horrible threat to Israel. I want to thank the Israeli military for the wonderful job they've done. And most importantly, I want to congratulate the great American patriots who flew those magnificent machines tonight, and all of the United States military on an operation the likes of which the world has not seen in many, many decades. Hopefully, we will no longer need their services in this capacity. I hope that's so. I also want to congratulate the Chairman of the Joint Chiefs of Staff, General Dan Raisen Kane, spectacular general, and all of the brilliant military minds involved in this attack. With all of that being said, this cannot continue. There will be either peace or there will be tragedy for Iran, and we will have to be more careful about that. But we will not be more careful about that. We will be more careful about that. And we will be far greater than we have witnessed over the last eight days. Remember, there are many targets left. Tonight's was the most difficult of them all, by far, and perhaps the most lethal. But if peace does not come quickly, we will go after those targets. And we will go after those targets. And we will go after those targets. There is no military in the world that could have done what we did tonight, not even close. There has never been a military that could do what took place just a little while ago. Tomorrow, General Kane, Secretary of Defense Pete Hegseth will have a press conference at 8 a.m. at the Pentagon. We will go after those targets. And when we do, we will go after them. We will go after them. Thank you, God, and we love our great military. Protect them. God bless the Middle East. God bless Israel and God bless America. Thank you very much. Thank you.",
     "Text": {
-        "ai_score": 75,
-        "fake_score": 95,
-        "confidence": 90,
-        "ai_evidence": [
-            "Overly formal language patterns: 'Dear Singaporeans, the day has come.'",
-            "Use of specific dates and numbers to appear credible: 'Starting November 11th, 2023', '$8,000', '$250'",
-            "Repetitive use of persuasive language: 'guaranteed monthly dividends', 'most profitable trades', 'absolutely real', 'all payouts are guaranteed'",
-            "Lack of specific details about the investment mechanism or company behind it"
-        ],
-        "fake_evidence": [
-            "Promises of 'guaranteed monthly dividends' and 'most profitable trades' are typical of scams",
-            "Claim of 'Earnings from $8,000 are absolutely real' without substantiation",
-            "Unrealistic promise of high returns with minimal investment ($250)",
-            "Personal guarantee of payouts, which is not a standard practice in legitimate investments",
-            "No mention of risks or potential losses, which is required for legitimate investment offerings",
-            "Web verification shows no evidence supporting the claims made in the text"
-        ],
-        "overall_assessment": "The analyzed text exhibits strong characteristics of both AI-generation and fraudulent content. It appears to be a scam targeting Singaporeans, using AI-generated language to create a false sense of legitimacy for a non-existent investment opportunity. The claims made in the text are not supported by any verifiable evidence and contradict known information about quantum AI investments in Singapore.",
-        "motive_analysis": "The writer's motive appears to be financial fraud. The text is designed to exploit people's desire for easy, guaranteed profits. By using buzzwords like 'Quantum AI' and appealing to national pride ('Dear Singaporeans'), the writer aims to lend credibility to the scam. The low entry point ($250) is likely intended to maximize the number of potential victims.",
-        "web_verification_summary": "Web verification provides no support for the claims made in the text. Instead, it reveals that:\n1. There are no guaranteed dividends for Quantum AI projects in Singapore.\n2. Singapore's quantum AI investments are focused on innovation and cybersecurity, not personal financial gains.\n3. The government has committed S$300 million for research and talent development in quantum technology, but this is unrelated to the investment scheme described in the text.\n4. There is no evidence of a personal guarantee system for quantum AI investments.\n5. The mention of a $200,000 fine for selling fake goods on Instagram suggests that Singapore takes fraud seriously, further highlighting the suspicious nature of the claims in the text.",
+        "ai_score": 90,
+        "fake_score": 80,
+        "confidence": 95,
+        "ai_evidence": "- Overly formal and stilted language patterns\n- Repetitive phrasing like \"We will go after those targets\" repeated multiple times\n- Lack of coherent narrative flow, jumping between topics\n- Unrealistic dialogue and speech patterns for a president",
+        "fake_evidence": "- Claims of massive military strikes on Iran's nuclear facilities directly contradict evidence that only one site was destroyed\n- Exaggerated language like \"completely and totally obliterated\" does not match facts\n- Unverified claims about Iran's rhetoric and actions against the U.S. and Israel\n- Lack of credible sources or evidence for many of the claims made",
+        "web_verification_summary": "The web verification evidence contradicts several key claims made in the text, especially regarding the extent of damage to Iran's nuclear facilities from the U.S. strikes. It appears the strikes set back Iran's program by months rather than destroying it completely as claimed. There is also a lack of evidence for some of the rhetoric attributed to Iran.",
+        "motive_analysis": "The overly aggressive and militaristic rhetoric, along with exaggerated claims of success, suggest this text may be propaganda or disinformation aimed at portraying strength against Iran and rallying domestic support. The context of heightened U.S.-Iran tensions also points to a potential motive of escalating the conflict through provocation.",
+        "overall_assessment": "Based on the analysis, this text appears to be an AI-generated piece of disinformation or propaganda related to a hypothetical military conflict between the U.S. and Iran over its nuclear program. The language patterns, lack of coherence, and factual inaccuracies compared to available evidence all point to an AI system attempting to generate provocative content rather than an authentic statement. The aggressive rhetoric and exaggerated claims of military success seem designed to escalate tensions and rally support rather than reflect reality. While the U.S. did conduct strikes on Iranian nuclear facilities, the extent of the damage and framing of the situation appears to be fabricated or distorted for propaganda purposes. Overall, this should not be treated as credible information.",
         "web_verification": {
             "title": "WEB EVIDENCE FOR FACT-CHECKING",
             "claims": [
                 {
                     "claim_number": 1,
-                    "claim_text": "The Quantum AI Investment Project has launched a project that will allow everyone to receive guaranteed monthly dividends with minimal investment.",
-                    "summary": "Quantum AI projects in Singapore have no guaranteed dividends. Investment in quantum AI is strategic, focusing on innovation and cybersecurity. No financial guarantees exist for these projects.",
-                    "evidence_snippets": [],
-                    "total_sources": 0
+                    "claim_text": "The U.S. military carried out massive precision strikes on the three key nuclear facilities in the Iranian regime - Fordow, Netanj, and Esfahan.",
+                    "summary": "In 2025, U.S. military conducted precision strikes on Iran's nuclear facilities at Fordo, Natanz, and Isfahan. Iran responded with missile and drone attacks on Israeli targets. The strikes significantly escalated tensions between the U.S. and Iran.",
+                    "evidence_snippets": [
+                        {
+                            "snippet_number": 1,
+                            "content": "Addressing the nation on Saturday evening, U.S. President Donald Trump said strikes on three of Iran\u2019s nuclear sites were a \u201cspectacular military succ...",
+                            "source_url": "https://www.cnbc.com/2025/06/22/iran-says-it-reserves-all-options-after-us-strikes-on-nuclear-sites.html"
+                        },
+                        {
+                            "snippet_number": 2,
+                            "content": "Alongside nuclear facilities at Natanz and Isfahan, Fordo was the target of U.S. air strikes on Saturday. Trump described the incursion as a \u201cspectacu...",
+                            "source_url": "https://www.cnbc.com/2025/06/22/satellite-images-show-activity-at-irans-fordo-before-us-air-strikes.html"
+                        },
+                        {
+                            "snippet_number": 3,
+                            "content": "VIDEO3:3503:35\n\nWatch President Donald Trump\u2019s address on the U.S. bombing of Iran\n\nNews Videos\n\nPresident Donald Trump on Saturday said the United St...",
+                            "source_url": "https://www.cnbc.com/2025/06/21/trump-israel-iran-conflict.html"
+                        }
+                    ],
+                    "total_sources": 3
                 },
                 {
                     "claim_number": 2,
-                    "claim_text": "The automated trading system makes only the most profitable trades, allowing investors to increase their income.",
-                    "summary": "Singapore is investing in quantum AI and has launched a hybrid quantum AI hub. Quantum-enhanced AI applications are being explored. The government is supporting quantum technology growth.",
-                    "evidence_snippets": [],
-                    "total_sources": 0
+                    "claim_text": "Iran's key nuclear enrichment facilities have been completely and totally obliterated.",
+                    "summary": "U.S. strikes destroyed one of three Iranian nuclear enrichment sites, but the others were only partially damaged and may resume operations soon. The U.S. assessment found that the program was set back by months, not years. President Trump claimed the strikes obliterated Iran's nuclear program.",
+                    "evidence_snippets": [
+                        {
+                            "snippet_number": 1,
+                            "content": "WASHINGTON \u2014 One of the three nuclear enrichment sites in Iran struck by the United States last month was mostly destroyed, setting work there back si...",
+                            "source_url": "https://www.cnbc.com/2025/07/17/new-us-assessment-finds-american-strikes-destroyed-only-one-of-three-iranian-nuclear-sites.html"
+                        },
+                        {
+                            "snippet_number": 2,
+                            "content": "Alongside nuclear facilities at Natanz and Isfahan, Fordo was the target of U.S. air strikes on Saturday. Trump described the incursion as a \u201cspectacu...",
+                            "source_url": "https://www.cnbc.com/2025/06/22/satellite-images-show-activity-at-irans-fordo-before-us-air-strikes.html"
+                        },
+                        {
+                            "snippet_number": 3,
+                            "content": "A preliminary U.S. intelligence assessment, however, found that America\u2019s airstrikes on three Iranian nuclear sites did not completely destroy those f...",
+                            "source_url": "https://www.cnbc.com/2025/06/25/trump-iran-intelligence-report-nato.html"
+                        }
+                    ],
+                    "total_sources": 3
                 },
                 {
                     "claim_number": 3,
-                    "claim_text": "Earnings from $8,000 are absolutely real.",
-                    "summary": "Quantum AI investment in Singapore has seen significant growth, with S$300 million committed by the government for research and talent development. OCBC Group aims to leverage quantum computing to enhance AI. The National Quantum Office and MAS support quantum and AI advancements.",
+                    "claim_text": "Iran has been saying \"death to America, death to Israel\" and killing U.S. people and others around the world.",
+                    "summary": "Iran has engaged in anti-American and anti-Israel rhetoric and actions, including missile strikes and drone attacks. The U.S. has not directly intervened but warned Iran against targeting U.S. interests. Israel has considered military action against Iran.",
                     "evidence_snippets": [],
                     "total_sources": 0
                 },
                 {
                     "claim_number": 4,
-                    "claim_text": "The company has made sure that this income is available to everyone, which is why the minimum investment amount has been reduced to $250.",
-                    "summary": "A man was ordered to pay $200,000 for selling fake goods on Instagram. The investment quantum for Temasek-owned GenZero's carbon credit initiatives is undisclosed. GenZero aims to cut 7 million tonnes of carbon emissions by 2028.",
-                    "evidence_snippets": [],
-                    "total_sources": 0
+                    "claim_text": "The U.S. military operation was a spectacular military success.",
+                    "summary": "In 2025, the U.S. military launched air strikes against Iran's nuclear facilities Fordo, Natanz, and Isfahan. The operation was a direct action against Iran's nuclear program. President Trump described the strikes as a success.",
+                    "evidence_snippets": [
+                        {
+                            "snippet_number": 1,
+                            "content": "Alongside nuclear facilities at Natanz and Isfahan, Fordo was the target of U.S. air strikes on Saturday. Trump described the incursion as a \u201cspectacu...",
+                            "source_url": "https://www.cnbc.com/2025/06/22/satellite-images-show-activity-at-irans-fordo-before-us-air-strikes.html"
+                        },
+                        {
+                            "snippet_number": 2,
+                            "content": "\u201cWe have completed our very successful attack on the three Nuclear sites in Iran, including Fordow, Natanz, and Esfahan,\u201d President Donald Trump said ...",
+                            "source_url": "https://www.cnbc.com/2025/06/21/trump-israel-iran-conflict.html"
+                        },
+                        {
+                            "snippet_number": 3,
+                            "content": "On Saturday night U.S. time, U.S. B-2 Spirit stealth bombers and submarines attacked three key Iranian nuclear sites, namely, Fordo, Natanz and Isfaha...",
+                            "source_url": "https://www.cnbc.com/2025/06/23/how-the-israel-iran-standoff-took-a-turn-and-whats-next-after-a-pivotal-24-hours.html"
+                        }
+                    ],
+                    "total_sources": 3
                 },
                 {
                     "claim_number": 5,
-                    "claim_text": "All payouts are guaranteed by the person introducing the project and their reputation.",
-                    "summary": "Quantum AI Investment Project does not have a personal guarantee. Investors should conduct their own due diligence. For specific details, consult official project documentation.",
+                    "claim_text": "The U.S. worked as a team with Israel, and the Israeli military did a wonderful job.",
+                    "summary": "U.S.-Israel cooperation against Iran includes military actions targeting Iran's nuclear facilities. This cooperation has led to heightened regional tensions. Iran has expressed willingness to resume talks but not under current conditions.",
                     "evidence_snippets": [],
                     "total_sources": 0
                 }
             ]
         },
-        "analysis_timestamp": "2025-09-04T19:31:26.788112",
-        "text_length": 606,
+        "analysis_timestamp": "2025-09-04T20:53:32.793509",
+        "text_length": 3142,
         "status": "analysis_complete"
     },
     "ImageMetadata": null
