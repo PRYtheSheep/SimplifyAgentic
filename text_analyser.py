@@ -2,7 +2,7 @@ import boto3
 import json
 import asyncio
 import logging
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any
 from datetime import datetime
 import os
 from dotenv import load_dotenv
