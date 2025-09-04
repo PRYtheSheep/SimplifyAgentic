@@ -137,20 +137,20 @@ class JudgementBot:
             ]
         }
 
-    async def final_assessment(self, analysis_data: Dict[str, Any], image_paths: Optional[List[str]] = None) -> Dict[str, Any]:
+    async def final_assessment(self, analysis_data: Dict[str, Any], encoded_images: Optional[List[str]] = None) -> Dict[str, Any]:
         """
-        Analyze comprehensive tool outputs and determine final authenticity assessment.
+        Analyze comprehensive tool outputs with base64 encoded images to determine final authenticity.
         
         Args:
             analysis_data: JSON containing all tool outputs and analysis results
-            image_paths: Optional list of image paths for visual reference
+            encoded_images: Optional list of base64 encoded image strings
             
         Returns:
             Comprehensive assessment with AI score, fake score, and detailed evidence
         """
         try:
-            # Prepare the analysis query for Bedrock
-            assessment_query = self._prepare_assessment_query(analysis_data, image_paths)
+            # Prepare the assessment query with encoded images
+            assessment_query = self._prepare_assessment_query(analysis_data, encoded_images)
             
             # Call Bedrock for final judgement
             final_judgement = await self._call_bedrock_for_judgement(assessment_query)
@@ -159,6 +159,7 @@ class JudgementBot:
                 **final_judgement,
                 "assessment_timestamp": datetime.now().isoformat(),
                 "components_analyzed": list(analysis_data.keys()),
+                "images_analyzed": len(encoded_images) if encoded_images else 0,
                 "status": "assessment_complete"
             }
             
@@ -174,11 +175,11 @@ class JudgementBot:
                 "status": "assessment_failed"
             }
 
-    def _prepare_assessment_query(self, analysis_data: Dict[str, Any], image_paths: List[str]) -> str:
-        """Prepare comprehensive assessment query with all analysis data"""
+    def _prepare_assessment_query(self, analysis_data: Dict[str, Any], encoded_images: List[str]) -> str:
+        """Prepare assessment query with base64 encoded images"""
         query = """
         Analyze the following comprehensive media analysis results and provide a final judgement on authenticity.
-        You MUST use the report_final_judgement tool with structured output.
+        YOU HAVE ACCESS TO THE ACTUAL IMAGES as base64 encoded data.
 
         COMPREHENSIVE ANALYSIS DATA:
         """
@@ -188,24 +189,37 @@ class JudgementBot:
             query += f"\n\n--- {tool_name.upper()} RESULTS ---\n"
             query += json.dumps(results, indent=2, ensure_ascii=False)
         
-        # Add image context if available
-        if image_paths:
-            query += f"\n\n--- IMAGES ANALYZED ({len(image_paths)} frames) ---\n"
-            query += f"Image paths: {', '.join(image_paths)}"
-            query += "\nConsider the visual analysis results in context of these images."
+        # Add encoded images for direct analysis
+        if encoded_images:
+            query += f"\n\n--- IMAGES FOR ANALYSIS ({len(encoded_images)} images) ---\n"
+            query += "The following images are provided as base64 encoded data for your direct analysis:\n"
+            
+            for i, encoded_image in enumerate(encoded_images[:5]):  # Limit to first 5 images
+                # Include the actual base64 data for the model to analyze
+                query += f"\nImage {i+1} [base64]: {encoded_image[:100]}...\n"
+                
+                # Add image analysis instructions
+                if i == 0:  # Only add instructions once
+                    query += """
+                    <image_analysis_instructions>
+                    Analyze these images directly for:
+                    - AI-generation artifacts (strange textures, inconsistent lighting)
+                    - Visual anomalies or inconsistencies
+                    - Overall image quality and coherence
+                    - Compare with the image_analysis results provided above
+                    </image_analysis_instructions>
+                    """
         
         query += """
         
         <assessment_instructions>
         1. Review ALL analysis components thoroughly
-        2. Identify the strongest evidence from each component
-        3. Look for consistency or contradictions across different analyses
+        2. Analyze the provided base64 images directly for visual authenticity
+        3. Identify the strongest evidence from each component
         4. Determine overall AI-generation likelihood (ai_score)
         5. Determine overall authenticity/fakeness (fake_score)
-        6. Assess confidence based on evidence strength and consistency
-        7. Provide specific evidence examples in key_evidence
-        8. Summarize findings comprehensively
-        9. MUST use report_final_judgement tool for response
+        6. Provide specific evidence including image observations
+        7. MUST use report_final_judgement tool for structured response
         </assessment_instructions>
         """
         
