@@ -1,22 +1,10 @@
 {
-  "ai_score": 20,
-  "fake_score": 95,
-  "confidence": 90,
-  "ai_evidence": [
-    "The text uses a personal, persuasive tone that is more characteristic of human-written content",
-    "There's a mix of formal and informal language, which is less typical of AI-generated text",
-    "The content includes specific details and claims that seem tailored to a particular audience",
-    "The structure and flow of the text appear more natural and less formulaic than typical AI-generated content"
-  ],
-  "fake_evidence": [
-    "The launch date (November 11th, 2023) contradicts the web verification, which states the project launched in 2025",
-    "The claim of guaranteed monthly dividends and 'most profitable trades' is highly suspicious and typical of scams",
-    "The promise of earnings from $8,000 being 'absolutely real' is unsubstantiated and conflicts with the web verification",
-    "The minimum investment amount of $250 is not corroborated by any official sources",
-    "The personal guarantee of payouts is a red flag, as legitimate investments don't offer such guarantees",
-    "The overall tone and promises are characteristic of get-rich-quick schemes and investment scams"
-  ],
-  "overall_assessment": "The analyzed text appears to be a fraudulent investment scheme masquerading as a legitimate government-backed project. While it's likely human-written, it contains numerous false claims and red flags typical of financial scams. The content contradicts official information about Singapore's quantum AI initiatives and makes unrealistic promises about returns and guarantees.",
-  "motive_analysis": "The writer's motive appears to be financial fraud. They are likely attempting to exploit public interest in emerging technologies like quantum computing and AI to lure unsuspecting investors into a scam. The use of persuasive language, unrealistic promises, and false claims of government backing suggest an intent to deceive for financial gain.",
-  "web_verification_summary": "The web verification contradicts several key claims in the text. It indicates that the Quantum AI Investment Project is set to launch in 2025, not 2023 as claimed. While Singapore is investing in quantum technology and AI, there's no evidence of a government-backed investment scheme as described. The verification also doesn't support the specific earnings claims or minimum investment amount mentioned in the text. Overall, the web evidence suggests that the claims in the text are largely fabricated or grossly misrepresented."
+  "ai_score": 90,
+  "fake_score": 80,
+  "confidence": 85,
+  "ai_evidence": "- Overly formal and rhetorical language (\"Thank you very much\", \"horribly destructive enterprise\", \"spectacular military success\")\n- Repetitive phrasing and structures (\"death to America, death to Israel\", \"key nuclear facilities\", \"precision strikes\")\n- Lack of specific details or context around the supposed military operation\n- Unrealistic claims about completely destroying Iran's nuclear program",
+  "fake_evidence": "- Claims directly contradict evidence from credible news sources about the limited impact of the strikes\n- Exaggerated language about the success and scale of the operation (\"completely and totally obliterated\", \"spectacular military success\")\n- Unverified details about military leadership and planning\n- Sensationalized rhetoric about motives and threats from Iran",
+  "overall_assessment": "The text appears to be an AI-generated fabrication masquerading as a presidential address about a major military strike on Iran's nuclear facilities. The language patterns, lack of specific details, and grandiose claims are highly indicative of AI generation. Additionally, the supposed facts of the operation directly contradict credible reporting that the strikes had a limited impact and did not destroy Iran's nuclear program as claimed.\n\nWhile tensions between the U.S. and Iran over nuclear activities are real, this particular text seems to be an AI-generated exaggeration or complete fiction, likely motivated by an attempt to stoke conflict or sow misinformation. The potential real-world ramifications of such fabricated rhetoric make this a concerning example of AI being misused to create and amplify fake and inflammatory content.",
+  "web_verification_summary": "The web verification evidence clearly contradicts several of the key factual claims made in the text, such as the assertion that Iran's nuclear facilities were \"completely and totally obliterated.\" Multiple credible sources report that while the strikes did damage some sites, Iran's nuclear program was set back by months rather than being destroyed. This directly undermines the core premise of the supposed presidential address.",
+  "motive_analysis": "The motive behind generating such inflammatory and exaggerated rhetoric appears to be an attempt to escalate tensions and potentially provoke further conflict between the U.S. and Iran over the latter's nuclear program. By fabricating claims of a decisive military strike that crippled Iran's nuclear capabilities, the text seems aimed at rallying support for more aggressive actions under the guise of addressing the \"threat\" posed by Iran. However, the contradictions with reality exposed by fact-checking suggest this may be a misinformation effort to manufacture a crisis."
 }

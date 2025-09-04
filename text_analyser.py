@@ -289,6 +289,11 @@ class TextAnalyzer:
             
             structured_evidence["claims"].append(claim_data)
         
+        # claims_with_evidence = [claim for claim in structured_evidence['claims'] if len(claim['evidence_snippets']) > 0]
+
+        # # Save to JSON file with proper formatting
+        # with open('weblinks.json', 'w') as f:
+        #     json.dump(claims_with_evidence, f, indent=2, ensure_ascii=False)
         # Save to JSON file with proper formatting
         with open('web_evidence.json', 'w') as f:
             json.dump(structured_evidence, f, indent=2, ensure_ascii=False)

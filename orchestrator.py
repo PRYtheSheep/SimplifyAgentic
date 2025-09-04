@@ -2,6 +2,7 @@ import boto3
 import json
 import os
 import tempfile
+import subprocess
 from typing import List, Tuple, Dict, Any, Optional
 from datetime import datetime
 from pathlib import Path
@@ -231,6 +232,26 @@ class MediaAnalysisOrchestrator:
 
     async def _extract_representative_frames(self, video_path: str, output_dir: Path, frames_count: int) -> List[str]:
         """Extract representative frames from video using smart sampling and color change detection"""
+
+        def _fix_video(input_path: str) -> str:
+            """Ensure the video is properly formatted for OpenCV by remuxing/re-encoding with ffmpeg"""
+            fixed_path = tempfile.mktemp(suffix=".mp4")
+
+            try:
+                # Try remuxing (fast, no re-encode)
+                subprocess.run(
+                    ["ffmpeg", "-y", "-i", input_path, "-c:v", "copy", "-an", fixed_path],
+                    check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+                )
+            except subprocess.CalledProcessError:
+                # If remux fails, fallback to re-encode
+                subprocess.run(
+                    ["ffmpeg", "-y", "-i", input_path, "-c:v", "libx264", "-preset", "fast", "-an", fixed_path],
+                    check=True
+                )
+
+            return fixed_path
+
         frame_paths = []
         
         # Apply global frame limit
@@ -238,7 +259,7 @@ class MediaAnalysisOrchestrator:
         logger.info(f"Extracting up to {frames_count} frames (global limit: {MAX_FRAMES_LIMIT})")
         
         try:
-            cap = cv2.VideoCapture(video_path)
+            cap = cv2.VideoCapture(_fix_video(video_path))
             if not cap.isOpened():
                 raise RuntimeError("Could not open video file")
             
@@ -261,7 +282,6 @@ class MediaAnalysisOrchestrator:
             # Extract frames with smart sampling and color change detection
             previous_frame = None
             color_change_scores = []
-            sampled_frames = []
             
             frame_idx = 0
             while frame_idx < total_frames:
@@ -408,6 +428,10 @@ class MediaAnalysisOrchestrator:
             # Perform comprehensive text analysis
             analysis_result = await text_analyzer.analyze_text(text_content)
             
+            # # Save to JSON file with proper formatting
+            # with open('weblinks.json', 'w') as f:
+            #     json.dump(analysis_result, f, indent=2, ensure_ascii=False)
+            
             logger.info(f"Text analysis completed: AI score={analysis_result.get('ai_score', 'N/A')}, "
                     f"Fake score={analysis_result.get('fake_score', 'N/A')}")
             
@@ -481,7 +505,16 @@ class MediaAnalysisOrchestrator:
         else:
             raise ValueError(f"Unsupported file extension: {ext}")
 
-        judge = JudgementBot(bedrock_client, model_id)
+        region3 = os.getenv('REGION', DEFAULT_REGION)    
+        bedrock_client2 = boto3.client(
+            service_name='bedrock-runtime',
+            region_name=region3,
+            aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+            aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+        )
+        model_id = os.getenv("MODEL_ID2", DEFAULT_MODEL)
+
+        judge = JudgementBot(bedrock_client2, model_id)
         # Final: Combine all outputs for judgement
 
         combined = {
@@ -495,7 +528,7 @@ class MediaAnalysisOrchestrator:
         # results["media_type"] = media_type
         final_assessment = await judge.final_assessment(analysis_data=results)
 
-        return final_assessment
+        return final_assessment, text_analysis
 
     # async def _execute_tools_and_continue(self, response: Dict, media_path: str) -> Dict[str, Any]:
     #     """Execute requested tools and continue conversation until completion"""
@@ -625,8 +658,24 @@ async def example_usage():
     try:
         # Get claude to extract context from user by repeatedly prompting user
         user_context = input("Provide additional context about the media\n")
-        results = await orchestrator.analyze_media(EXAMPLE_VIDEO_PATH, user_context=user_context)
-        print(json.dumps(results))
+        results, text_analysis = await orchestrator.analyze_media(EXAMPLE_VIDEO_PATH, user_context=user_context)
+
+        #TODO I want to extract claims only with len(evidence snippets) > 0
+        # if isinstance(text_analysis, str):
+        #     text_analysis = json.loads(text_analysis)
+
+        # # now filter the claims with evidence
+        # claims_with_evidence = [
+        #     claim for claim in text_analysis["web_verification"]["claims"]
+        #     if claim.get("evidence_snippets") and len(claim["evidence_snippets"]) > 0
+        # ]
+
+        # results.update(claims_with_evidence)
+        # print(json.dumps(results))
+
+        # # Save to JSON file with proper formatting
+        # with open('weblinks.json', 'w') as f:
+        #     json.dump(claims_with_evidence, f, indent=2, ensure_ascii=False)
 
         with open('final_output.json', "w") as f:
             json.dump(results, f, indent=4)

@@ -4,12 +4,10 @@ import os
 from datetime import datetime
 import re
 
-import boto3 
-from botocore.exceptions import ClientError
-
 from strands import Agent, tool
 from strands.models import BedrockModel
-from strands_tools import http_request
+
+from globals import *
 
 logging.getLogger("strands").setLevel(logging.INFO)
 logging.basicConfig(
@@ -28,17 +26,6 @@ import time
 TAVILY_API_KEY = os.getenv('TAVILY_API_KEY', None)
 # print(TAVILY_API_KEY)
 # print(f"access key: {os.getenv("AWS_ACCESS_KEY_ID", None)}")
-
-bedrock_model = BedrockModel(
-    # model_id="us.amazon.nova-lite-v1:0",
-    # model_id="anthropic.claude-3-5-sonnet-20240620-v1:0",
-    model_id = "anthropic.claude-3-haiku-20240307-v1:0",
-    # model_id="anthropic.claude-3-5-sonnet-20240620-v1:0",
-    temperature=0.1,
-    region_name="ap-southeast-1",
-    top_p=0.9,
-    # max_tokens = 300
-)
 
 if TAVILY_API_KEY:
     from tavily import TavilyClient
@@ -75,7 +62,8 @@ def web_search(query: str, max_results: int = 3):
     print(f"max_results: {max_results}")
     print(f"search start: {datetime.now()}")
     print("*"*20)
-    domains = ["straitstimes.com/singapore","channelnewsasia.com/singapore","mothership.sg","todayonline.com"]
+    current_year = datetime.now().year
+    domains = ["straitstimes.com/singapore","channelnewsasia.com/singapore","mothership.sg","todayonline.com",f"www.cnbc.com/{current_year}",f"https://edition.cnn.com/{current_year}"]
     # exclude_tags = ["listen","tag","topic"]
     # domains_excluded = [i+"/"+j for i in domains for j in exclude_tags]
     # print(domains_excluded)
@@ -148,6 +136,19 @@ def analyse_text(prompt):
     List them in <query1></query1>, <query2></query2> format. 
     
     """
+
+    region = os.getenv("REGION", DEFAULT_REGION)
+    model_id = os.getenv("MODEL_ID2", DEFAULT_MODEL)
+
+    bedrock_model = BedrockModel(
+    # model_id="us.amazon.nova-lite-v1:0",
+    # model_id="anthropic.claude-3-5-sonnet-20240620-v1:0",
+    model_id = model_id,
+    temperature=0.1,
+    region_name=region,
+    top_p=0.9,
+    # max_tokens = 300
+)
 
     extraction_agent = Agent(
         model = bedrock_model,
