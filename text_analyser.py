@@ -178,6 +178,9 @@ class TextAnalyzer:
             # Call Bedrock for analysis with tool enforcement
             analysis_result = await self._call_bedrock_with_tool(analysis_query)
             
+            with open('text_analysis.json', 'w') as f:
+                json.dump(analysis_result, f, indent=2, ensure_ascii=False)
+
             return {
                 **analysis_result,
                 "web_verification": web_verification_results,
