@@ -1,0 +1,22 @@
+{
+  "ai_score": 75,
+  "fake_score": 95,
+  "confidence": 90,
+  "ai_evidence": [
+    "Overly formal language patterns: 'Dear Singaporeans, the day has come.'",
+    "Use of specific dates and numbers to appear credible: 'Starting November 11th, 2023', '$8,000', '$250'",
+    "Repetitive use of persuasive language: 'guaranteed monthly dividends', 'most profitable trades', 'absolutely real', 'all payouts are guaranteed'",
+    "Lack of specific details about the investment mechanism or company behind it"
+  ],
+  "fake_evidence": [
+    "Promises of 'guaranteed monthly dividends' and 'most profitable trades' are typical of scams",
+    "Claim of 'Earnings from $8,000 are absolutely real' without substantiation",
+    "Unrealistic promise of high returns with minimal investment ($250)",
+    "Personal guarantee of payouts, which is not a standard practice in legitimate investments",
+    "No mention of risks or potential losses, which is required for legitimate investment offerings",
+    "Web verification shows no evidence supporting the claims made in the text"
+  ],
+  "overall_assessment": "The analyzed text exhibits strong characteristics of both AI-generation and fraudulent content. It appears to be a scam targeting Singaporeans, using AI-generated language to create a false sense of legitimacy for a non-existent investment opportunity. The claims made in the text are not supported by any verifiable evidence and contradict known information about quantum AI investments in Singapore.",
+  "motive_analysis": "The writer's motive appears to be financial fraud. The text is designed to exploit people's desire for easy, guaranteed profits. By using buzzwords like 'Quantum AI' and appealing to national pride ('Dear Singaporeans'), the writer aims to lend credibility to the scam. The low entry point ($250) is likely intended to maximize the number of potential victims.",
+  "web_verification_summary": "Web verification provides no support for the claims made in the text. Instead, it reveals that:\n1. There are no guaranteed dividends for Quantum AI projects in Singapore.\n2. Singapore's quantum AI investments are focused on innovation and cybersecurity, not personal financial gains.\n3. The government has committed S$300 million for research and talent development in quantum technology, but this is unrelated to the investment scheme described in the text.\n4. There is no evidence of a personal guarantee system for quantum AI investments.\n5. The mention of a $200,000 fine for selling fake goods on Instagram suggests that Singapore takes fraud seriously, further highlighting the suspicious nature of the claims in the text."
+}

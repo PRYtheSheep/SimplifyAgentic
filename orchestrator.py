@@ -440,6 +440,8 @@ class MediaAnalysisOrchestrator:
 
         results = {"user_context": user_context}
 
+        text_from_audio, text_analysis, image_analysis = None, None, None
+
         if ext in self.VIDEO_EXTS:
             media_type = "video"
             # Step 1: Extract audio + frames
@@ -449,7 +451,7 @@ class MediaAnalysisOrchestrator:
 
             # Step 2: Transcribe audio
             output = await self.analyze_audio(audio_file_path)
-            text_from_audio = output["transcipt"]
+            text_from_audio = output["transcript"]
             logger.info(f"Audio analysis: {output["status"]}")
 
             # Step 3: Analyze text
@@ -491,7 +493,7 @@ class MediaAnalysisOrchestrator:
             json.dump(combined, f, indent=4)
 
         # results["media_type"] = media_type
-        final_assessment = judge.final_assessment(analysis_data=results)
+        final_assessment = await judge.final_assessment(analysis_data=results)
 
         return final_assessment
 
@@ -605,9 +607,14 @@ async def example_usage():
     """Example of how to use the orchestrator"""
     try:
         # Get claude to extract context from user by repeatedly prompting user
-        user_context = input("Provide additional context about the media")
+        user_context = input("Provide additional context about the media\n")
         results = await orchestrator.analyze_media(EXAMPLE_VIDEO_PATH, user_context=user_context)
-        print(results)
+        print(json.dumps(results))
+
+        with open('final_output.json', "w") as f:
+            json.dump(results, f, indent=4)
+
+        logger.info("Analysis complete")
         
     except Exception as e:
         print(f"Error: {e}")

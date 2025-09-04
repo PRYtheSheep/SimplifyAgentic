@@ -6,6 +6,7 @@ from typing import Dict, Any, Optional, List
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+import time
 
 from globals import *
 logger = logging.getLogger(__name__)
@@ -240,6 +241,8 @@ class JudgementBot:
         }
 
         try:
+            logger.info("Sleep for 60s to prevent throttling")
+            time.sleep(60)
             response = self.bedrock_client.converse(**converse_api_params)
             return self._extract_final_judgement(response)
             
