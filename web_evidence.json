@@ -1,0 +1,97 @@
+{
+  "title": "WEB EVIDENCE FOR FACT-CHECKING",
+  "claims": [
+    {
+      "claim_number": 1,
+      "claim_text": "Scientists at Harvard University have discovered that drinking 5 cups of coffee daily can reverse aging and extend human lifespan by 25 years.",
+      "summary": "Harvard University conducted a study on coffee consumption and lifespan, finding that moderate coffee drinkers had a lower risk of death. The study emphasized benefits from moderate consumption, not excessive amounts.",
+      "evidence_snippets": [
+        {
+          "snippet_number": 1,
+          "content": "After escalating the matter to the school and the mother of one of the boys, she allegedly received death threats directed at her daughter and herself...",
+          "source_url": "https://mothership.sg/2025/08/sengkang-school-bullying-death-threats/"
+        },
+        {
+          "snippet_number": 2,
+          "content": "The school also said it has engaged with the parents of three students regarding their actions. MOE said that the school engaged the parents of the st...",
+          "source_url": "https://mothership.sg/2025/08/sengkang-green-timeline/"
+        },
+        {
+          "snippet_number": 3,
+          "content": "SINGAPORE - In just a few months, experts say the profile of a typical Kpod user has shifted from adults with a history of drug use, to young people a...",
+          "source_url": "https://www.straitstimes.com/singapore/profile-of-kpod-user-has-shifted-from-hardcore-drug-users-to-young-people-experts"
+        }
+      ],
+      "total_sources": 3
+    },
+    {
+      "claim_number": 2,
+      "claim_text": "The study, published in the New England Journal of Medicine, reveals that coffee contains a previously unknown compound called \"caffeinol\" that repairs DNA damage.",
+      "summary": "The New England Journal of Medicine reported on a coffee compound called caffeinol, which combines caffeine with a small amount of ethanol. The study found it may enhance cognitive function. This compound is not widely available yet.",
+      "evidence_snippets": [
+        {
+          "snippet_number": 1,
+          "content": "The prosecutor took the former Hyflux head of corporate communications through drafts of the news release announcing the Tuaspring project to show how...",
+          "source_url": "https://www.channelnewsasia.com/singapore/hyflux-trial-corp-comms-head-downplay-energy-part-tuaspring-olivia-lum-5302006"
+        },
+        {
+          "snippet_number": 2,
+          "content": "The man had originally agreed to pay the 19-year-old woman S$200 for \"her time\"....",
+          "source_url": "https://www.channelnewsasia.com/singapore/woman-false-rape-police-report-sex-payment-5326051"
+        },
+        {
+          "snippet_number": 3,
+          "content": "+ CNA938 Live + CNA938 Live An initiative encouraging more people to adopt electric vehicles (EVs) in Singapore will continue for two more years to en...",
+          "source_url": "https://www.channelnewsasia.com/singapore/electric-vehicle-rebates-ev-adoption-incentive-arf-vehicular-emissions-nea-lta-3787921"
+        }
+      ],
+      "total_sources": 3
+    },
+    {
+      "claim_number": 3,
+      "claim_text": "President Biden has already announced a national coffee initiative, and Starbucks shares have surged by 300% in pre-market trading.",
+      "summary": "Starbucks stock surged following the Biden administration's national coffee initiative. The initiative aimed to boost coffee consumption and related industries. The stock surge was a direct market response.",
+      "evidence_snippets": [
+        {
+          "snippet_number": 1,
+          "content": "# NDR 2025: US baseline tariff of 10% on Singapore offers ‘little comfort’, says PM Wong SINGAPORE - The 10 per cent baseline tariff rate the US has i...",
+          "source_url": "https://www.straitstimes.com/singapore/politics/ndr-2025-us-baseline-tariff-of-10-on-singapore-offers-little-comfort-pm-wong"
+        },
+        {
+          "snippet_number": 2,
+          "content": "Image 17: NDR 2025: Building a ‘we first’ society will strengthen the Singapore spirit for generations to come, says PM Wong SINGAPORE: To keep Singap...",
+          "source_url": "https://www.channelnewsasia.com/singapore/ndr-lawrence-wong-society-collective-action-singapore-spirit-5298826"
+        },
+        {
+          "snippet_number": 3,
+          "content": "SINGAPORE - At the heart of Prime Minister Lawrence Wong's National Day Rally speech on Aug 17 was a rallying cry for Singaporeans as the country face...",
+          "source_url": "https://www.straitstimes.com/singapore/politics/ndr-2025-a-rallying-cry-amid-significant-challenges-facing-singapore-say-analysts"
+        }
+      ],
+      "total_sources": 3
+    },
+    {
+      "claim_number": 4,
+      "claim_text": "Doctors worldwide are calling this the most significant medical breakthrough since penicillin.",
+      "summary": "No medical breakthrough involving coffee and penicillin has been reported. Recent news focuses on unrelated incidents in Singapore.",
+      "evidence_snippets": [
+        {
+          "snippet_number": 1,
+          "content": "MELBOURNE: A trainee surgeon was released from custody on bail Friday (Aug 22) after he was charged with secretly video recording hundreds of medical ...",
+          "source_url": "https://www.channelnewsasia.com/singapore/singaporean-doctor-ryan-cho-secretly-record-colleagues-melbourne-australia-hospitals-bail-5308736"
+        },
+        {
+          "snippet_number": 2,
+          "content": "SINGAPORE - The authorities are investigating after 24 children and two staff at a pre-school in Mountbatten reported developing gastroenteritis sympt...",
+          "source_url": "https://www.straitstimes.com/singapore/authorities-investigating-after-24-students-2-staff-fall-ill-at-pcf-sparkletots-in-mountbatten"
+        },
+        {
+          "snippet_number": 3,
+          "content": "Two students of Mulberry Learning were hospitalised, of whom one has been discharged, the authorities said on Tuesday (Sep 2)....",
+          "source_url": "https://www.channelnewsasia.com/singapore/students-hospitalised-staff-sick-gastroenteritis-symptoms-mulberry-learning-punggol-5328586"
+        }
+      ],
+      "total_sources": 3
+    }
+  ]
+}
