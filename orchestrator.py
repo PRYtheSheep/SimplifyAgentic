@@ -603,6 +603,23 @@ orchestrator = MediaAnalysisOrchestrator()
 chat = ClaudeChat()
 
 # Example usage
+async def example_usage_2(example_video_path,user_context):
+    """Example of how to use the orchestrator"""
+    try:
+        # Get claude to extract context from user by repeatedly prompting user
+        # user_context = input("Provide additional context about the media\n")
+        results = await orchestrator.analyze_media(example_video_path, user_context=user_context)
+        print(json.dumps(results))
+
+        with open('final_output.json', "w") as f:
+            json.dump(results, f, indent=4)
+
+        logger.info("Analysis complete")
+        return results
+        
+    except Exception as e:
+        print(f"Error: {e}")
+
 async def example_usage():
     """Example of how to use the orchestrator"""
     try:
@@ -615,6 +632,7 @@ async def example_usage():
             json.dump(results, f, indent=4)
 
         logger.info("Analysis complete")
+        return results
         
     except Exception as e:
         print(f"Error: {e}")

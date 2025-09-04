@@ -1,0 +1,33 @@
+{
+    "ai_score_0_100": 30,
+    "fake_score_0_100": 95,
+    "confidence_0_100": 90,
+    "summary": "The analyzed media content is highly likely to be a fraudulent investment scheme masquerading as a legitimate government-backed project. While the text appears to be primarily human-written, it contains numerous false claims and exhibits characteristics typical of financial scams. The content significantly contradicts official information about Singapore's quantum AI initiatives and makes unrealistic promises about returns and guarantees.",
+    "key_evidence": [
+        "Text analysis indicates human authorship with an AI score of 20 out of 100",
+        "Fake score of 95 out of 100 based on numerous false claims and scam characteristics",
+        "Web verification contradicts key claims, including the project's launch date and investment details",
+        "Unrealistic promises of guaranteed returns and 'most profitable trades' typical of investment scams",
+        "False claim of government backing and personal guarantee of payouts"
+    ],
+    "component_analysis": {
+        "text": "The text analysis reveals a mix of formal and informal language, with a personal and persuasive tone more characteristic of human-written content. However, it contains numerous red flags typical of investment scams.",
+        "visual": "No specific visual analysis was provided in the data. However, the presence of base64 encoded images suggests visual content exists and should be carefully examined for signs of manipulation or misrepresentation.",
+        "audio": "No audio analysis was provided in the given data.",
+        "technical": "The web verification process found no supporting evidence for the claims made in the text. It contradicts the launch date, investment amounts, and the existence of a government-backed investment scheme as described in the content."
+    },
+    "recommendations": [
+        "Conduct a thorough investigation into the source of this content",
+        "Issue public warnings about this specific investment scheme",
+        "Enhance public education on identifying investment scams and verifying government-backed initiatives",
+        "Collaborate with financial regulators to monitor and prevent similar fraudulent schemes",
+        "Perform detailed analysis of the associated images to identify any visual manipulation or misrepresentation"
+    ],
+    "assessment_timestamp": "2025-09-04T19:39:46.355659",
+    "components_analyzed": [
+        "user_context",
+        "text_analysis"
+    ],
+    "images_analyzed": 0,
+    "status": "assessment_complete"
+}
