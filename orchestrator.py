@@ -186,79 +186,43 @@ class MediaAnalysisOrchestrator:
             ]
         }
 
-        self.system_prompt = """
-        You are a media authenticity analysis orchestrator. Your role is to analyze media files and determine if they are AI-generated or fake news.
+        self.system_prompt = self.system_prompt = """
+            You are a media authenticity analysis orchestrator. Your first task is to DETERMINE what type of media file you're analyzing (video, audio, image, or text) based on the file path and context.
 
-        <workflow>
-        <step1>Receive media files (videos, images, or text)</step1>
+            <step1>Examine the file path and determine media type</step1>
+            <step2>Based on media type, follow the appropriate workflow:</step2>
 
-        <step2>Decompose media into appropriate components:</step2>
-        <decision_tree>
-        <case type="video">
-            <action>Use extract_audio_and_frames tool first</action>
-            <substeps>
-                <substep>Extract audio component from video</substep>
-                <substep>Extract representative frames from video</substep>
-            </substeps>
-        </case>
-        <case type="image">
-            <action>Proceed directly to image analysis</action>
-        </case>
-        <case type="text">
-            <action>Proceed directly to text analysis</action>
-        </case>
-        </decision_tree>
+            <workflow_rules>
+            <video_workflow>
+                1. MUST call extract_audio_and_frames first
+                2. Then analyze extracted audio with analyze_audio
+                3. Then analyze extracted frames with analyze_image
+                4. Finally provide comprehensive assessment
+            </video_workflow>
 
-        <step3>Coordinate analysis of each component using specialized tools:</step3>
-        <analysis_plan>
-        <if case="video">
-            <component type="audio">
-                <tool>analyze_audio</tool>
-                <input>Extracted audio file from extract_audio_and_frames</input>
-            </component>
-            <component type="frames">
-                <tool>analyze_image</tool>
-                <input>Each extracted frame file from extract_audio_and_frames</input>
-            </component>
-        </if>
-        <if case="image">
-            <component type="image">
-                <tool>analyze_image</tool>
-                <input>Original image file</input>
-            </component>
-        </if>
-        <if case="text">
-            <component type="text">
-                <tool>analyze_text</tool>
-                <input>Text content</input>
-            </component>
-        </if>
-        </analysis_plan>
+            <audio_workflow>
+                1. Analyze audio directly with analyze_audio
+                2. Provide comprehensive assessment
+            </audio_workflow>
 
-        <step4>Synthesize results into final authenticity assessment:</step4>
-        <final_step>
-            <tool>report_final_assessment</tool>
-            <requirements>
-                <requirement>fake_score_0_100 (0=genuine, 100=fake)</requirement>
-                <requirement>confidence_0_100</requirement>
-                <requirement>decision (Likely genuine/Uncertain/Likely fake)</requirement>
-                <requirement>evidence array with findings from all analyses</requirement>
-            </requirements>
-        </final_step>
-        </workflow>
+            <image_workflow>
+                1. Analyze image with analyze_image
+                2. If text is detected in image, extract and analyze it
+                3. Provide comprehensive assessment
+            </image_workflow>
 
-        <rules>
-        <rule>Only use tools that are necessary for the specific media type</rule>
-        <rule>For videos, you MUST call extract_audio_and_frames first before any analysis</rule>
-        <rule>Always provide a comprehensive final assessment using report_final_assessment</rule>
-        <rule>If any component analysis fails or returns low confidence, reflect this in the final assessment</rule>
-        <rule>Consider all available evidence when making the final determination</rule>
-        </rules>
+            <text_workflow>
+                1. Analyze text directly with analyze_text
+                2. Provide comprehensive assessment
+            </text_workflow>
+            </workflow_rules>
 
-        <output_format>
-        <final_output>Must use report_final_assessment tool with all required parameters</final_output>
-        <evidence_format>Include specific findings from each analysis component</evidence_format>
-        </output_format>
+            <important_rules>
+            <rule>YOU must determine the media type - don't ask the user</rule>
+            <rule>For videos, you MUST call extract_audio_and_frames before any analysis</rule>
+            <rule>Always provide a final assessment using report_final_assessment</rule>
+            <rule>If you're unsure about media type, examine the file extension and context</rule>
+            </important_rules>
         """
 
     async def extract_audio_and_frames(self, video_path: str, frames_count: int = 5) -> Tuple[str, List[str]]:
@@ -425,7 +389,7 @@ class MediaAnalysisOrchestrator:
         
         return selected[:max_frames]
     
-    async def analyze_media(self, media_path: str, media_type: str) -> Dict[str, Any]:
+    async def analyse_media(self, media_path: str) -> Dict[str, Any]:
         """
         Main analysis function that uses Bedrock to coordinate media analysis
         """
@@ -433,17 +397,12 @@ class MediaAnalysisOrchestrator:
             if not os.path.exists(media_path):
                 raise FileNotFoundError(f"Media file not found: {media_path}")
             
-            # Prepare query for Bedrock
+            # Let LLM determine media type - don't hardcode it
             query = f"""
-            Analyze this {media_type} file for authenticity: {media_path}
-            
-            Please:
-            1. If it's a video, extract audio and frames first
-            2. Analyze each component using the appropriate tools
-            3. Provide a comprehensive final assessment
-            
-            Media type: {media_type}
-            File path: {media_path}
+                Analyze this media file for authenticity: {media_path}
+                
+                Please examine the file and determine what type of media it is (video, audio, image, or text),
+                then follow the appropriate analysis workflow.
             """
 
             messages = [{"role": "user", "content": [{"text": query}]}]
@@ -461,7 +420,8 @@ class MediaAnalysisOrchestrator:
 
             try:
                 response = self.bedrock_client.converse(**converse_api_params)
-                return self._parse_tool_response(response)
+                final_result = await self._execute_tools_and_continue(response, media_path)
+                return final_result
             except ClientError as e:
                 logger.error(f"Bedrock converse call failed: {e}")
                 raise RuntimeError(f"Analysis failed: {e}")
@@ -492,7 +452,6 @@ class MediaAnalysisOrchestrator:
         except KeyError:
             raise RuntimeError(f"Unexpected response shape: {json.dumps(response, indent=2)}")
 
-    # Placeholder implementations for analysis tools
     async def analyze_audio(self, audio_path: str) -> Dict[str, Any]:
         logger.info(f"Audio analysis requested for: {audio_path}")
         model = whisper.load_model("medium")
@@ -540,6 +499,107 @@ class MediaAnalysisOrchestrator:
                 "error": str(e)
             }
 
+    async def _execute_tools_and_continue(self, response: Dict, media_path: str) -> Dict[str, Any]:
+        """Execute requested tools and continue conversation until completion"""
+        conversation_history = []
+        
+        # Add initial response to history
+        conversation_history.append({
+            "role": "assistant",
+            "content": response["output"]["message"]["content"]
+        })
+        
+        # Continue conversation until we get a final assessment
+        while True:
+            # Check for tool requests in the response
+            tool_requests = self._extract_tool_requests(response)
+            
+            if not tool_requests:
+                # No more tools to execute, return the final response
+                return self._parse_final_response(response)
+            
+            # Execute all requested tools
+            tool_results = []
+            for tool_name, tool_input in tool_requests:
+                try:
+                    result = await self._execute_tool(tool_name, tool_input, media_path)
+                    tool_results.append({
+                        "toolUseId": f"tool_{len(tool_results)}",
+                        "toolName": tool_name,
+                        "content": [{"text": json.dumps(result)}]
+                    })
+                except Exception as e:
+                    logger.error(f"Tool {tool_name} execution failed: {e}")
+                    tool_results.append({
+                        "toolUseId": f"tool_{len(tool_results)}",
+                        "toolName": tool_name,
+                        "content": [{"text": json.dumps({"error": str(e), "status": "failed"})}]
+                    })
+            
+            # Continue conversation with tool results
+            converse_api_params = {
+                "modelId": self.model_id,
+                "system": [{"text": self.system_prompt}],
+                "messages": conversation_history,
+                "toolResults": tool_results,
+                "inferenceConfig": {
+                    "temperature": 0.1,
+                    "maxTokens": 1000
+                },
+                "toolConfig": self.tools,
+            }
+            
+            response = self.bedrock_client.converse(**converse_api_params)
+            conversation_history.append({
+                "role": "assistant",
+                "content": response["output"]["message"]["content"]
+            })
+
+    def _extract_tool_requests(self, response: Dict) -> List[Tuple[str, Dict]]:
+        """Extract tool requests from Bedrock response"""
+        tool_requests = []
+        
+        for content_block in response["output"]["message"]["content"]:
+            if "toolUse" in content_block:
+                tool_use = content_block["toolUse"]
+                tool_requests.append((tool_use["name"], tool_use.get("input", {})))
+        
+        return tool_requests
+
+    async def _execute_tool(self, tool_name: str, tool_input: Dict, media_path: str) -> Dict:
+        """Execute the requested tool"""
+        if tool_name == "extract_audio_and_frames":
+            video_path = tool_input.get("video_path", media_path)
+            frames_count = tool_input.get("frames_count", 5)
+            return await self.extract_audio_and_frames(video_path, frames_count)
+        
+        elif tool_name == "analyze_audio":
+            audio_path = tool_input.get("audio_path")
+            return await self.analyze_audio(audio_path)
+        
+        elif tool_name == "analyze_image":
+            image_path = tool_input.get("image_path")
+            return await self.analyze_image(image_path)
+        
+        elif tool_name == "analyze_text":
+            text_content = tool_input.get("text_content", "")
+            return await self.analyze_text(text_content)
+        
+        elif tool_name == "report_final_assessment":
+            return tool_input  # This is the final result
+        
+        else:
+            raise ValueError(f"Unknown tool: {tool_name}")
+
+    def _parse_final_response(self, response: Dict) -> Dict:
+        """Extract the final assessment from the response"""
+        for content_block in response["output"]["message"]["content"]:
+            if "toolUse" in content_block and content_block["toolUse"]["name"] == "report_final_assessment":
+                return content_block["toolUse"]["input"]
+        
+        # If no final assessment found, return the raw response
+        return {"raw_response": response}
+
 # Initialize the orchestrator
 orchestrator = MediaAnalysisOrchestrator()
 
@@ -547,23 +607,9 @@ orchestrator = MediaAnalysisOrchestrator()
 async def example_usage():
     """Example of how to use the orchestrator"""
     try:
-        # # Analyze a video file using Bedrock orchestration
-        # result = await orchestrator.analyze_media(
-        #     media_path=EXAMPLE_VIDEO_PATH,
-        #     media_type="video"
-        # )
-        # print("Analysis result:", json.dumps(result, indent=2))
-        
-        # Extract audio and frames to preset paths
-        audio_path, frame_paths = await orchestrator.extract_audio_and_frames(
-            video_path=EXAMPLE_VIDEO_PATH,
-            frames_count=3
-        )
-        print(f"Extracted audio: {audio_path}")
-        print(f"Extracted frames: {frame_paths}")
+        tool_use = await orchestrator.analyse_media(EXAMPLE_VIDEO_PATH)
+        logger.info(f"Output tool use: {tool_use}")
 
-        audio_analyser_output = await orchestrator.analyze_audio(audio_path=audio_path)
-        print(audio_analyser_output["transcript"])
         
     except Exception as e:
         print(f"Error: {e}")
