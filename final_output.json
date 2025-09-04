@@ -1,11 +1,19 @@
 {
     "ai_score_0_100": 90,
     "fake_score_0_100": 80,
-    "confidence_0_100": 90,
-    "summary": "Based on the comprehensive analysis, this appears to be an AI-generated piece of disinformation or propaganda related to a hypothetical military conflict between the U.S. and Iran over its nuclear program. The language patterns, lack of coherence, and factual inaccuracies compared to available evidence all point to an AI system attempting to generate provocative content rather than an authentic statement. The aggressive rhetoric and exaggerated claims of military success seem designed to escalate tensions and rally support rather than reflect reality.",
-    "key_evidence": "- Text analysis found overly formal and stilted language patterns, repetitive phrasing, lack of coherent narrative flow, and unrealistic dialogue that are indicative of AI-generated content.\n- Web verification contradicts several key claims made in the text, especially regarding the extent of damage to Iran's nuclear facilities from the U.S. strikes. The strikes set back Iran's program by months rather than destroying it completely as claimed.\n- Motive analysis suggests the text may be propaganda or disinformation aimed at portraying strength against Iran and rallying domestic support, rather than an authentic statement.\n- Visual analysis of the provided images did not reveal any clear signs of manipulation or AI-generation, but the lack of visual content makes it difficult to draw strong conclusions.",
-    "recommendations": "- Further investigate the source and potential motives behind the creation of this content\n- Fact-check any specific claims made against credible, verifiable sources\n- Monitor for similar AI-generated or fake content attempting to escalate tensions between the U.S. and Iran\n- Educate the public on the risks of disinformation and the importance of verifying information from multiple sources",
-    "assessment_timestamp": "2025-09-04T20:53:39.962030",
+    "confidence_0_100": 85,
+    "summary": "Based on the comprehensive analysis, this text appears to be an AI-generated fabrication masquerading as a presidential address about a major military strike on Iran's nuclear facilities. The language patterns, lack of specific details, and exaggerated claims are highly indicative of AI generation. Additionally, the key facts about the operation's impact directly contradict credible reporting, indicating this is likely a misinformation effort to escalate tensions between the U.S. and Iran.\n\nThe strongest evidence includes:\n- Text analysis: Overly formal and rhetorical language, repetitive phrasing, lack of context, and unrealistic claims about completely destroying Iran's nuclear program\n- Web verification: Multiple credible sources reporting the strikes only set back Iran's nuclear program for months, not the \"complete and total obliteration\" claimed\n- Motive analysis: The inflammatory and exaggerated rhetoric seems aimed at manufacturing a crisis to justify more aggressive actions against Iran\n\nWhile the U.S. and Iran have real tensions over nuclear activities, this particular text appears to be an AI-generated fabrication rather than an authentic presidential address. The potential real-world impact of such misinformation makes this a concerning example of AI being misused to create and amplify fake content.",
+    "key_evidence": [
+        "Text analysis: Overly formal and rhetorical language, repetitive phrasing, lack of context, and unrealistic claims about completely destroying Iran's nuclear program",
+        "Web verification: Multiple credible sources reporting the strikes only set back Iran's nuclear program for months, not the 'complete and total obliteration' claimed",
+        "Motive analysis: The inflammatory and exaggerated rhetoric seems aimed at manufacturing a crisis to justify more aggressive actions against Iran"
+    ],
+    "recommendations": [
+        "Further investigate the source and potential motives behind the creation of this fabricated text",
+        "Increase monitoring and detection of AI-generated misinformation targeting geopolitical tensions",
+        "Educate the public on how to identify AI-generated content and verify claims against credible sources"
+    ],
+    "assessment_timestamp": "2025-09-04T21:52:06.313432",
     "components_analyzed": [
         "user_context",
         "text_analysis"

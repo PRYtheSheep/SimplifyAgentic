@@ -282,7 +282,6 @@ class MediaAnalysisOrchestrator:
             # Extract frames with smart sampling and color change detection
             previous_frame = None
             color_change_scores = []
-            sampled_frames = []
             
             frame_idx = 0
             while frame_idx < total_frames:
@@ -429,6 +428,10 @@ class MediaAnalysisOrchestrator:
             # Perform comprehensive text analysis
             analysis_result = await text_analyzer.analyze_text(text_content)
             
+            # # Save to JSON file with proper formatting
+            # with open('weblinks.json', 'w') as f:
+            #     json.dump(analysis_result, f, indent=2, ensure_ascii=False)
+            
             logger.info(f"Text analysis completed: AI score={analysis_result.get('ai_score', 'N/A')}, "
                     f"Fake score={analysis_result.get('fake_score', 'N/A')}")
             
@@ -525,7 +528,7 @@ class MediaAnalysisOrchestrator:
         # results["media_type"] = media_type
         final_assessment = await judge.final_assessment(analysis_data=results)
 
-        return final_assessment
+        return final_assessment, text_analysis
 
     # async def _execute_tools_and_continue(self, response: Dict, media_path: str) -> Dict[str, Any]:
     #     """Execute requested tools and continue conversation until completion"""
@@ -638,8 +641,24 @@ async def example_usage():
     try:
         # Get claude to extract context from user by repeatedly prompting user
         user_context = input("Provide additional context about the media\n")
-        results = await orchestrator.analyze_media(EXAMPLE_VIDEO_PATH, user_context=user_context)
-        print(json.dumps(results))
+        results, text_analysis = await orchestrator.analyze_media(EXAMPLE_VIDEO_PATH, user_context=user_context)
+
+        #TODO I want to extract claims only with len(evidence snippets) > 0
+        # if isinstance(text_analysis, str):
+        #     text_analysis = json.loads(text_analysis)
+
+        # # now filter the claims with evidence
+        # claims_with_evidence = [
+        #     claim for claim in text_analysis["web_verification"]["claims"]
+        #     if claim.get("evidence_snippets") and len(claim["evidence_snippets"]) > 0
+        # ]
+
+        # results.update(claims_with_evidence)
+        # print(json.dumps(results))
+
+        # # Save to JSON file with proper formatting
+        # with open('weblinks.json', 'w') as f:
+        #     json.dump(claims_with_evidence, f, indent=2, ensure_ascii=False)
 
         with open('final_output.json', "w") as f:
             json.dump(results, f, indent=4)

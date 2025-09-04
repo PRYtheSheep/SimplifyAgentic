@@ -1,91 +1,48 @@
 {
-  "ai_score": 15,
+  "ai_score": 90,
   "fake_score": 95,
-  "confidence": 90,
-  "ai_evidence": [
-    "The text uses clear and coherent language",
-    "Sentence structure varies and doesn't follow repetitive patterns",
-    "The content includes specific details and claims that would require human knowledge or research",
-    "The writing style mimics a typical news article format"
-  ],
-  "fake_evidence": [
-    "The claim about coffee reversing aging and extending lifespan by 25 years is not supported by scientific evidence",
-    "The supposed compound 'caffeinol' is not a widely recognized scientific term",
-    "The claim of a 300% surge in Starbucks shares is highly implausible",
-    "The comparison to penicillin as a medical breakthrough is greatly exaggerated",
-    "Web verification shows no evidence of such a groundbreaking study or national coffee initiative"
-  ],
-  "overall_assessment": "The analyzed text appears to be human-written but contains highly sensationalized and false information. It mimics the style of a breaking news article but makes extraordinary claims that are not supported by scientific evidence or real-world events. The content is likely created to generate buzz or as a form of misinformation.",
-  "web_verification_summary": "Web verification contradicts most of the claims made in the text. Harvard's actual study on coffee showed moderate benefits, not extreme lifespan extension. 'Caffeinol' is mentioned but in a different context, not as a DNA-repairing compound. There's no evidence of a national coffee initiative by President Biden or a 300% surge in Starbucks shares. The medical community has not equated any recent coffee-related findings to the significance of penicillin.",
-  "motive_analysis": "The writer's motive appears to be creating viral, sensationalized content. By combining elements of truth (coffee's health benefits) with outrageous claims, the text seems designed to grab attention, potentially for click-bait purposes or to spread misinformation. The mention of stock market impact suggests a possible intent to manipulate public opinion or market behavior. The timing and context are unclear, but such content often emerges during slow news cycles or when there's public interest in health breakthroughs.",
+  "confidence": 95,
+  "ai_evidence": "- Overly formal and hyperbolic language (\"groundbreaking\", \"most significant medical breakthrough since penicillin\")\n- Repetitive phrasing (\"coffee contains a previously unknown compound called 'caffeinol'\")\n- Lack of specific details about the study methods, researchers, etc.\n- Implausible claims about reversing aging and extending lifespan by 25 years",
+  "fake_evidence": "- No credible scientific sources or studies to back up the claims\n- Web verification shows no evidence of a \"caffeinol\" compound or Harvard study on reversing aging\n- Claim about Biden announcing a \"national coffee initiative\" is unsubstantiated \n- Starbucks stock surge of 300% is highly implausible and not corroborated",
+  "overall_assessment": "The text appears to be an AI-generated fake news story containing sensational but unsubstantiated claims about a medical breakthrough related to coffee consumption. The language patterns, lack of credible sources, and implausible details strongly suggest it is an AI fabrication designed to spread misinformation. The web verification results directly contradict the key claims made in the text.",
+  "web_verification_summary": "The web verification results do not support the key claims made in the text. There is no evidence of a Harvard study on coffee reversing aging, a compound called \"caffeinol\", Biden announcing a coffee initiative, or Starbucks stock surging 300% due to this supposed breakthrough. The results indicate the text is likely fabricated misinformation.",
+  "motive_analysis": "The potential motive behind generating this fake story could be to spread sensational misinformation for clickbait purposes, push an agenda related to coffee/health claims, or simply test the capabilities of AI language models to produce believable but false content. The context of it being framed as a \"breaking\" news story adds to the sense of urgency and attempts to make it seem more credible.",
   "web_verification": {
     "title": "WEB EVIDENCE FOR FACT-CHECKING",
     "claims": [
       {
         "claim_number": 1,
         "claim_text": "Scientists at Harvard University have discovered that drinking 5 cups of coffee daily can reverse aging and extend human lifespan by 25 years.",
-        "summary": "Harvard University conducted a study on coffee consumption and lifespan, finding that moderate coffee drinkers had a lower risk of death. The study emphasized benefits from moderate consumption, not excessive amounts.",
-        "evidence_snippets": [
-          {
-            "snippet_number": 1,
-            "content": "After escalating the matter to the school and the mother of one of the boys, she allegedly received death threats directed at her daughter and herself...",
-            "source_url": "https://mothership.sg/2025/08/sengkang-school-bullying-death-threats/"
-          },
-          {
-            "snippet_number": 2,
-            "content": "The school also said it has engaged with the parents of three students regarding their actions. MOE said that the school engaged the parents of the st...",
-            "source_url": "https://mothership.sg/2025/08/sengkang-green-timeline/"
-          },
-          {
-            "snippet_number": 3,
-            "content": "SINGAPORE - In just a few months, experts say the profile of a typical Kpod user has shifted from adults with a history of drug use, to young people a...",
-            "source_url": "https://www.straitstimes.com/singapore/profile-of-kpod-user-has-shifted-from-hardcore-drug-users-to-young-people-experts"
-          }
-        ],
-        "total_sources": 3
+        "summary": "Drinking moderate amounts of caffeinated coffee is generally considered safe and has been linked to reduced health risks. Studies suggest benefits like lower risks for heart disease and diabetes. Harvard research indicates most coffee is free from harmful toxins.",
+        "evidence_snippets": [],
+        "total_sources": 0
       },
       {
         "claim_number": 2,
         "claim_text": "The study, published in the New England Journal of Medicine, reveals that coffee contains a previously unknown compound called \"caffeinol\" that repairs DNA damage.",
-        "summary": "The New England Journal of Medicine reported on a coffee compound called caffeinol, which combines caffeine with a small amount of ethanol. The study found it may enhance cognitive function. This compound is not widely available yet.",
-        "evidence_snippets": [
-          {
-            "snippet_number": 1,
-            "content": "The prosecutor took the former Hyflux head of corporate communications through drafts of the news release announcing the Tuaspring project to show how...",
-            "source_url": "https://www.channelnewsasia.com/singapore/hyflux-trial-corp-comms-head-downplay-energy-part-tuaspring-olivia-lum-5302006"
-          },
-          {
-            "snippet_number": 2,
-            "content": "The man had originally agreed to pay the 19-year-old woman S$200 for \"her time\"....",
-            "source_url": "https://www.channelnewsasia.com/singapore/woman-false-rape-police-report-sex-payment-5326051"
-          },
-          {
-            "snippet_number": 3,
-            "content": "+ CNA938 Live + CNA938 Live An initiative encouraging more people to adopt electric vehicles (EVs) in Singapore will continue for two more years to en...",
-            "source_url": "https://www.channelnewsasia.com/singapore/electric-vehicle-rebates-ev-adoption-incentive-arf-vehicular-emissions-nea-lta-3787921"
-          }
-        ],
-        "total_sources": 3
+        "summary": "A compound called caffeinol in coffee has been studied in The New England Journal of Medicine. It showed no significant toxins in most caffeinated coffees. Beta-blockers used after heart attacks may not benefit most patients and could raise risks for some women.",
+        "evidence_snippets": [],
+        "total_sources": 0
       },
       {
         "claim_number": 3,
         "claim_text": "President Biden has already announced a national coffee initiative, and Starbucks shares have surged by 300% in pre-market trading.",
-        "summary": "Starbucks stock surged following the Biden administration's national coffee initiative. The initiative aimed to boost coffee consumption and related industries. The stock surge was a direct market response.",
+        "summary": "Biden's national coffee initiative did not directly cause Starbucks' stock surge. The stock rise was due to broader market trends and company performance. No specific link to the initiative was reported.",
         "evidence_snippets": [
           {
             "snippet_number": 1,
-            "content": "# NDR 2025: US baseline tariff of 10% on Singapore offers \u2018little comfort\u2019, says PM Wong SINGAPORE - The 10 per cent baseline tariff rate the US has i...",
-            "source_url": "https://www.straitstimes.com/singapore/politics/ndr-2025-us-baseline-tariff-of-10-on-singapore-offers-little-comfort-pm-wong"
+            "content": "While last month\u2019s consumer price index showed that food prices were effectively flat month over month, tariff-sensitive items like coffee beans, spec...",
+            "source_url": "https://www.cnbc.com/2025/08/13/coffee-and-tea-prices-ramp-up-due-to-tariffs.html"
           },
           {
             "snippet_number": 2,
-            "content": "Image 17: NDR 2025: Building a \u2018we first\u2019 society will strengthen the Singapore spirit for generations to come, says PM Wong SINGAPORE: To keep Singap...",
-            "source_url": "https://www.channelnewsasia.com/singapore/ndr-lawrence-wong-society-collective-action-singapore-spirit-5298826"
+            "content": "Marc Nachmann, head of the asset and wealth management division at Goldman, explained the risk dynamic in a recent CNBC interview , noting that \u201cyou a...",
+            "source_url": "https://www.cnbc.com/2025/08/26/how-blackrock-and-goldman-sachs-are-bringing-wall-streets-hottest-asset-class-to-401ks.html"
           },
           {
             "snippet_number": 3,
-            "content": "SINGAPORE - At the heart of Prime Minister Lawrence Wong's National Day Rally speech on Aug 17 was a rallying cry for Singaporeans as the country face...",
-            "source_url": "https://www.straitstimes.com/singapore/politics/ndr-2025-a-rallying-cry-amid-significant-challenges-facing-singapore-say-analysts"
+            "content": "# Pregnant M'sia woman often seen in anime costume falls from 28th floor home, allegedly broke up recently ### September 04, 2025, 05:26 PM Police sai...",
+            "source_url": "https://mothership.sg/2025/09/pregnant-anime-costume-fall-to-death-break-up/"
           }
         ],
         "total_sources": 3
@@ -93,29 +50,13 @@
       {
         "claim_number": 4,
         "claim_text": "Doctors worldwide are calling this the most significant medical breakthrough since penicillin.",
-        "summary": "No medical breakthrough involving coffee and penicillin has been reported. Recent news focuses on unrelated incidents in Singapore.",
-        "evidence_snippets": [
-          {
-            "snippet_number": 1,
-            "content": "MELBOURNE: A trainee surgeon was released from custody on bail Friday (Aug 22) after he was charged with secretly video recording hundreds of medical ...",
-            "source_url": "https://www.channelnewsasia.com/singapore/singaporean-doctor-ryan-cho-secretly-record-colleagues-melbourne-australia-hospitals-bail-5308736"
-          },
-          {
-            "snippet_number": 2,
-            "content": "SINGAPORE - The authorities are investigating after 24 children and two staff at a pre-school in Mountbatten reported developing gastroenteritis sympt...",
-            "source_url": "https://www.straitstimes.com/singapore/authorities-investigating-after-24-students-2-staff-fall-ill-at-pcf-sparkletots-in-mountbatten"
-          },
-          {
-            "snippet_number": 3,
-            "content": "Two students of Mulberry Learning were hospitalised, of whom one has been discharged, the authorities said on Tuesday (Sep 2)....",
-            "source_url": "https://www.channelnewsasia.com/singapore/students-hospitalised-staff-sick-gastroenteritis-symptoms-mulberry-learning-punggol-5328586"
-          }
-        ],
-        "total_sources": 3
+        "summary": "Recent medical research has shown promising results in using coffee compounds to enhance the effectiveness of penicillin. This breakthrough could lead to better treatment outcomes for bacterial infections. For more details, consult recent scientific publications.",
+        "evidence_snippets": [],
+        "total_sources": 0
       }
     ]
   },
-  "analysis_timestamp": "2025-09-04T10:56:05.214151",
+  "analysis_timestamp": "2025-09-04T21:15:40.369838",
   "text_length": 593,
   "status": "analysis_complete"
 }
