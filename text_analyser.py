@@ -259,56 +259,68 @@ class TextAnalyzer:
         This would integrate with fact-checking APIs, search engines, or databases.
         """
         evidence = raw_query_web(text_content)
-        evidence_text = "WEB EVIDENCE FOR FACT-CHECKING:\n\n"
+        
+        # Create structured data for JSON output
+        structured_evidence = {
+            "title": "WEB EVIDENCE FOR FACT-CHECKING",
+            "claims": []
+        }
         
         for i, result in enumerate(evidence):
-            evidence_text += f"CLAIM {i+1}: {result['claim']}\n"
-            evidence_text += f"SUMMARY: {result['summary']}\n"
+            claim_data = {
+                "claim_number": i + 1,
+                "claim_text": result['claim'],
+                "summary": result['summary'],
+                "evidence_snippets": [],
+                "total_sources": len(result['urls'])
+            }
             
             if result["contents"]:
-                evidence_text += "TOP EVIDENCE SNIPPETS:\n"
-                for j, (content, url) in enumerate(zip(result["contents"][:3], result["urls"][:3])):
-                    evidence_text += f"{j+1}. {content[:150]}... [Source: {url}]\n"
-            else:
-                evidence_text += "NO EVIDENCE FOUND\n"
+                for j, (content, url) in enumerate(zip(result["contents"], result["urls"])):
+                    snippet = {
+                        "snippet_number": j + 1,
+                        "content": content[:150] + "...",
+                        "source_url": url
+                    }
+                    claim_data["evidence_snippets"].append(snippet)
             
-            evidence_text += f"TOTAL SOURCES: {len(result['urls'])}\n"
-            evidence_text += "-" * 50 + "\n"
-
+            structured_evidence["claims"].append(claim_data)
+        
+        # Save to JSON file with proper formatting
         with open('web_evidence.json', 'w') as f:
-            json.dump(evidence_text, f, indent=2)
+            json.dump(structured_evidence, f, indent=2, ensure_ascii=False)
         
-        return evidence_text
+        return structured_evidence
+
+    # async def analyze_with_motive_assessment(self, text_content: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
+    #     """
+    #     Enhanced analysis that includes motive assessment and context awareness
+    #     using tool functionality for structured output.
+    #     """
+    #     if context is None:
+    #         context = {}
         
-    async def analyze_with_motive_assessment(self, text_content: str, context: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Enhanced analysis that includes motive assessment and context awareness
-        using tool functionality for structured output.
-        """
-        if context is None:
-            context = {}
+    #     motive_query = f"""
+    #     Analyze the following text with additional context for motive assessment.
+    #     You MUST use the report_text_analysis tool.
         
-        motive_query = f"""
-        Analyze the following text with additional context for motive assessment.
-        You MUST use the report_text_analysis tool.
+    #     TEXT TO ANALYZE:
+    #     {text_content}
         
-        TEXT TO ANALYZE:
-        {text_content}
+    #     ADDITIONAL CONTEXT:
+    #     {json.dumps(context, indent=2)}
         
-        ADDITIONAL CONTEXT:
-        {json.dumps(context, indent=2)}
+    #     Please provide a comprehensive analysis including motive assessment and context awareness.
+    #     """
         
-        Please provide a comprehensive analysis including motive assessment and context awareness.
-        """
+    #     # Perform analysis with enhanced context
+    #     analysis_result = await self._call_bedrock_with_tool(motive_query)
         
-        # Perform analysis with enhanced context
-        analysis_result = await self._call_bedrock_with_tool(motive_query)
+    #     # Add context metadata
+    #     analysis_result["context_aware_analysis"] = True
+    #     analysis_result["context_provided"] = bool(context)
         
-        # Add context metadata
-        analysis_result["context_aware_analysis"] = True
-        analysis_result["context_provided"] = bool(context)
-        
-        return analysis_result
+    #     return analysis_result
 
 if __name__ == "__main__":
     # Configure logging
