@@ -115,16 +115,28 @@ if prompt := st.chat_input("Type your message..."):
             if "component_analysis" in keys:
                 print("DOM2")
                 print(response["component_analysis"])
-                final_response+= "**Component Analysis:** \n"
+                final_response+= "\n**Component Analysis:** \n"
                 if isinstance(response["component_analysis"], list):
                     for i, item in enumerate(response["component_analysis"]):
                         final_response += f""" {item} \n"""
 
                 elif isinstance(response["component_analysis"], str):
-                    final_response += response["component_analysis"]
-                    final_response += "\n"
-                # for key,value in response["component_analysis"].items():
-                #     final_response+= f"{key}: {value}\n"
+                    try:
+                        formatted_string = "{" + response["component_analysis"].strip().replace(' "', '", "') + "}"
+                        data = json.loads(formatted_string)
+
+                        for key, value in data.items():
+                            # Capitalize the key and replace underscore for better readability
+                            formatted_key = key.replace('_', ' ').title()
+                            final_response += f"{formatted_key}: {value}\n"
+
+                    except json.JSONDecodeError as e:
+                        print(f"Error decoding JSON: {e}")
+                        final_response += response["component_analysis"]
+                        final_response += "\n"
+                elif isinstance(response["component_analysis"], dict):
+                    for key,value in response["component_analysis"].items():
+                        final_response+= f"{key}: {value}\n"
             
             
     # Handle file upload if one exists in session state
