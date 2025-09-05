@@ -636,12 +636,15 @@ orchestrator = MediaAnalysisOrchestrator()
 chat = ClaudeChat()
 
 # Example usage
-async def example_usage_2(example_video_path,user_context):
+async def example_usage_2(user_context,example_video_path=None):
     """Example of how to use the orchestrator"""
     try:
         # Get claude to extract context from user by repeatedly prompting user
         # user_context = input("Provide additional context about the media\n")
-        results = await orchestrator.analyze_media(example_video_path, user_context=user_context)
+        if example_video_path:
+            results = await orchestrator.analyze_media(example_video_path,user_context=user_context)
+        else:
+            results = await orchestrator.analyze_text(user_context)
         print(json.dumps(results))
 
         with open('final_output.json', "w") as f:

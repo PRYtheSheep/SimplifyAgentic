@@ -26,6 +26,7 @@ dependencies:
   - urllib3=2.3.0
   - wheel=0.45.1
   - pip:
+      - streamlit
       - strands-agents-tools
       - tavily-python
       - ddgs
