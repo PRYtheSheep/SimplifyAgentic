@@ -1,6 +1,8 @@
 import streamlit as st
 import asyncio
 import json
+import os
+import tempfile
 from orchestrator import example_usage_2
 
 # Page configuration
@@ -26,8 +28,12 @@ def render_uploader():
             type=["jpg", "jpeg", "png", "mp3", "wav", "mp4", "mov", "avi"],
             key=f"uploader_{st.session_state.uploader_key}",  # unique key
         )
+        tmp_file_path = None
         if uploaded:
             st.session_state.uploaded_file = uploaded
+            with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(uploaded.name)[1]) as tmp_file:
+                tmp_file.write(uploaded.read())
+                tmp_file_path = tmp_file.name
         
         # Show preview only if we have a file in session state
         if st.session_state.uploaded_file:
@@ -39,9 +45,9 @@ def render_uploader():
                 st.audio(st.session_state.uploaded_file)
             elif "video" in file_type:
                 st.video(st.session_state.uploaded_file)
-        return uploaded
+        return uploaded,tmp_file_path
 
-uploaded_file = render_uploader()
+uploaded_file,tmp_file_path = render_uploader()
 
 # Display conversation history
 for msg in st.session_state.messages:
@@ -60,45 +66,90 @@ for msg in st.session_state.messages:
 # Text input box
 if prompt := st.chat_input("Type your message..."):
     # Add user's message to conversation history
+    
     st.session_state.messages.append({"role": "user", "type": "text", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
-
         
         # return results
-        response = asyncio.run(example_usage_2(r"C:\Users\PRYth\OneDrive\Desktop\Agentic\SimplifyAgentic\test_input\example3.mp4", prompt))
+        with st.spinner("🤖 Processing your request..."):
+            # response = asyncio.run(example_usage_2(prompt, example_video_path=r"C:\Users\ASUS\Downloads\agentic workshop 2\SimplifyAgentic\test_input\example3.mp4"))[0]
+            response = asyncio.run(example_usage_2(prompt, example_video_path=tmp_file_path))[0]
+            st.success("Done!")
         # response = json.dumps(response, indent=2)
+        
+        print(type(response))
+        print(response)
+        if response:
+            for key,val in response.items():
+                print(f"{key}: {val}\n")
+            final_response = f"""
+📝 Final Report
 
-        response = f"""
-        ### 📝 Scam Analysis Report
+**Summary:**  
+{response['summary']}
 
-        **Summary:**  
-        {response['summary']}
+**Scores:**  
+- 🤖 AI Score: {response['ai_score_0_100']}/100  
+- 🕵️ Fake Score: {response['fake_score_0_100']}/100  
+- 📊 Confidence: {response['confidence_0_100']}/100  
+            
+"""
+            keys = response.keys()
+            print(keys)
+            # print(type(response["key_evidence"]))
+            # print(type(response["component_analysis"]))
+            # print("types")
+            if "key_evidence" in keys:
+                print("DOM")
+                print(response["key_evidence"])
+                final_response += "**Key Evidence:** \n"
+                if isinstance(response["key_evidence"], list):
+                    for i, item in enumerate(response["key_evidence"]):
+                        final_response += f""" {item} \n"""
 
-        **Scores:**  
-        - 🤖 AI Score: {response['ai_score_0_100']}/100  
-        - 🕵️ Fake Score: {response['fake_score_0_100']}/100  
-        - 📊 Confidence: {response['confidence_0_100']}/100  
+                elif isinstance(response["key_evidence"], str):
+                    final_response += response["key_evidence"]
+                    final_response += "\n"
 
-        **Key Evidence:**  
-        """ + "\n".join([f"- {e}" for e in response['key_evidence']]) + """
+            if "component_analysis" in keys:
+                print("DOM2")
+                print(response["component_analysis"])
+                final_response+= "\n**Component Analysis:** \n"
+                if isinstance(response["component_analysis"], list):
+                    for i, item in enumerate(response["component_analysis"]):
+                        final_response += f""" {item} \n"""
 
-        **Recommendations:**  
-        """ + "\n".join([f"- {r}" for r in response['recommendations']])
+                elif isinstance(response["component_analysis"], str):
+                    try:
+                        formatted_string = "{" + response["component_analysis"].strip().replace(' "', '", "') + "}"
+                        data = json.loads(formatted_string)
+
+                        for key, value in data.items():
+                            # Capitalize the key and replace underscore for better readability
+                            formatted_key = key.replace('_', ' ').title()
+                            final_response += f"{formatted_key}: {value}\n"
+
+                    except json.JSONDecodeError as e:
+                        print(f"Error decoding JSON: {e}")
+                        final_response += response["component_analysis"]
+                        final_response += "\n"
+                elif isinstance(response["component_analysis"], dict):
+                    for key,value in response["component_analysis"].items():
+                        final_response+= f"{key}: {value}\n"
+            
+            
     # Handle file upload if one exists in session state
     if st.session_state.uploaded_file:
 
         st.session_state.uploader_key += 1  # Increment the key to force a reset of the file uploader
         st.session_state.uploaded_file = None  # Clear the uploaded file from session state
 
-        # response = "File uploaded with your message!" ### update here
-    # else:
-        # response = f"Echo: {prompt}"
 
     # Add assistant's response to conversation history and display it
-    st.session_state.messages.append({"role": "assistant", "type": "text", "content": response})
+    st.session_state.messages.append({"role": "assistant", "type": "text", "content": final_response})
     with st.chat_message("assistant"):
-        st.markdown(response)
+        st.markdown(final_response)
 
     # Rerun the app to re-render the sidebar after updating the session state
     st.rerun()
