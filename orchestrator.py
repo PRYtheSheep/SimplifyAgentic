@@ -17,6 +17,7 @@ from text_analyser import TextAnalyzer
 from image_metadata import get_exif_dict
 import whisper
 import torch
+from datetime import datetime
 
 from globals import *
 from judgement import JudgementBot
@@ -468,6 +469,7 @@ class MediaAnalysisOrchestrator:
 
         if ext in self.VIDEO_EXTS:
             media_type = "video"
+
             # Step 1: Extract audio + frames
             audio_file_path, frame_files_path = await self.extract_audio_and_frames(media_file)
             # results["audio_extracted"] = audio_file

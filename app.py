@@ -4,6 +4,27 @@ import json
 import os
 import tempfile
 from orchestrator import example_usage_2
+from datetime import datetime
+import re
+
+def extract_and_print_fields(json_string):
+        # Define the fields we want to extract
+        fields = ["text", "audio", "visual", "technical"]
+        res = {}
+        for field in fields:
+            # Regex pattern to match "field": "content" (handles escaped quotes and multiline)
+            pattern = rf'"{field}"\s*:\s*"((?:[^"\\]|\\.)*)\"'
+            match = re.search(pattern, json_string, re.DOTALL)
+            
+            if match:
+                content = match.group(1)
+                # Unescape any escaped quotes
+                content = content.replace('\\"', '"')
+                res[field] = content
+                print(f'"{field}": {content}')
+            else:
+                print(f'"{field}": Not found')
+        return res
 
 # Page configuration
 st.set_page_config(page_title="Chatbot", page_icon="🤖", layout="centered")
@@ -66,7 +87,8 @@ for msg in st.session_state.messages:
 # Text input box
 if prompt := st.chat_input("Type your message..."):
     # Add user's message to conversation history
-    
+    time_before = datetime.now()
+
     st.session_state.messages.append({"role": "user", "type": "text", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
@@ -78,8 +100,8 @@ if prompt := st.chat_input("Type your message..."):
             st.success("Done!")
         # response = json.dumps(response, indent=2)
         
-        print(type(response))
-        print(response)
+        # print(type(response))
+        # print(response)
         if response:
             for key,val in response.items():
                 print(f"{key}: {val}\n")
@@ -96,13 +118,13 @@ if prompt := st.chat_input("Type your message..."):
             
 """
             keys = response.keys()
-            print(keys)
+            # print(keys)
             # print(type(response["key_evidence"]))
             # print(type(response["component_analysis"]))
             # print("types")
             if "key_evidence" in keys:
-                print("DOM")
-                print(response["key_evidence"])
+                
+                # print(response["key_evidence"])
                 final_response += "**Key Evidence:** \n"
                 if isinstance(response["key_evidence"], list):
                     for i, item in enumerate(response["key_evidence"]):
@@ -113,22 +135,29 @@ if prompt := st.chat_input("Type your message..."):
                     final_response += "\n"
 
             if "component_analysis" in keys:
-                print("DOM2")
-                print(response["component_analysis"])
+                
+                # print(response["component_analysis"])
                 final_response+= "\n**Component Analysis:** \n"
+                print(type(response["component_analysis"]))
                 if isinstance(response["component_analysis"], list):
                     for i, item in enumerate(response["component_analysis"]):
                         final_response += f""" {item} \n"""
 
                 elif isinstance(response["component_analysis"], str):
                     try:
-                        formatted_string = "{" + response["component_analysis"].strip().replace(' "', '", "') + "}"
-                        data = json.loads(formatted_string)
+                        # extract_and_print_fields(json_data)
+                        extracted_fields =  extract_and_print_fields(response["component_analysis"])
+                        for field in extracted_fields:
 
-                        for key, value in data.items():
-                            # Capitalize the key and replace underscore for better readability
-                            formatted_key = key.replace('_', ' ').title()
-                            final_response += f"{formatted_key}: {value}\n"
+                            final_response += f"\n {response["component_analysis"]}"
+
+                        # formatted_string = "{" + response["component_analysis"].strip().replace(' "', '", "') + "}"
+                        # data = json.loads(formatted_string)
+
+                        # for key, value in data.items():
+                        #     # Capitalize the key and replace underscore for better readability
+                        #     formatted_key = key.replace('_', ' ').title()
+                        #     final_response += f"{formatted_key}: {value}\n"
 
                     except json.JSONDecodeError as e:
                         print(f"Error decoding JSON: {e}")
@@ -149,6 +178,8 @@ if prompt := st.chat_input("Type your message..."):
     # Add assistant's response to conversation history and display it
     st.session_state.messages.append({"role": "assistant", "type": "text", "content": final_response})
     with st.chat_message("assistant"):
+        print(f"Time elapsed: {(datetime.now()-time_before).seconds}")
+        # final_response += f"\nTime elapsed: {(datetime.now()-time_before).seconds}"
         st.markdown(final_response)
 
     # Rerun the app to re-render the sidebar after updating the session state

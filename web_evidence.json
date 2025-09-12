@@ -3,29 +3,36 @@
   "claims": [
     {
       "claim_number": 1,
-      "claim_text": "In Springfield, they're eating the dogs, the people that came in.",
-      "summary": "Eating dogs is not culturally accepted in Springfield. Recent news focuses on animal welfare and legal issues regarding stray dogs in India. For specific details, refer to original sources.",
+      "claim_text": "The Quantum AI Investment Project has launched a project that will allow everyone to receive guaranteed monthly dividends with minimal investment.",
+      "summary": "Quantum AI investment projects are gaining traction, with Honeywell's Quantinuum considering a significant funding round. Recent reports suggest a potential valuation of $10 billion. This reflects growing interest in quantum computing advancements.",
       "evidence_snippets": [],
       "total_sources": 0
     },
     {
       "claim_number": 2,
-      "claim_text": "They're eating the cats.",
-      "summary": "Eating cats in Springfield is not a known cultural practice or documented event. There are no credible references to such an activity. This topic lacks factual basis.",
+      "claim_text": "The automated trading system makes only the most profitable trades, allowing investors to increase their income.",
+      "summary": "Quantum AI investment projects face fraud risks; IQM raised $320 million for quantum computing; quantum computing is projected to significantly impact commercial real estate.",
       "evidence_snippets": [],
       "total_sources": 0
     },
     {
       "claim_number": 3,
-      "claim_text": "They're eating the pets of the people that live there.",
-      "summary": "Eating pets is illegal in many places, including Singapore, where strict penalties apply. In Malaysia, a pet dog refused to eat after its owner died. Stray dogs in India's capital regained the right to live without being euthanized.",
+      "claim_text": "Earnings from $8,000 are absolutely real.",
+      "summary": "Quantum computing is attracting significant investment, with forecasts predicting $20 billion in investments by 2030 and $100 billion in revenue by 2035. Major companies like Microsoft, IBM, Google, and Amazon are heavily investing in quantum technology. Quantum computing startup IQM recently raised $320 million in funding.",
       "evidence_snippets": [],
       "total_sources": 0
     },
     {
       "claim_number": 4,
-      "claim_text": "This is what's happening in our country.",
-      "summary": "Eating pets is illegal in the United States. There is no legal or cultural practice of consuming pets in the country. This is against animal welfare laws.",
+      "claim_text": "The minimum investment amount has been reduced to $250.",
+      "summary": "The minimum investment for quantum AI projects is not specified. Quantum computing investments are projected to reach $20 billion by 2030. Consult specific startup details for precise figures.",
+      "evidence_snippets": [],
+      "total_sources": 0
+    },
+    {
+      "claim_number": 5,
+      "claim_text": "All payouts are guaranteed by the person making the claim and their reputation.",
+      "summary": "Quantum AI projects often lack guaranteed payouts; however, significant investment and revenue growth is expected by 2035.",
       "evidence_snippets": [],
       "total_sources": 0
     }
